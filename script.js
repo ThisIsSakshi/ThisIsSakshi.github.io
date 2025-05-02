@@ -113,7 +113,7 @@ let currentModel = 'hibiki';
 // Add other working model names here
 const models = {
   hibiki: "https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json",
-  tororo: "https://cdn.jsdelivr.net/gh/evrstr/live2d-widget-models/live2d_evrstr/blackcat/model.json" // another super cute one!
+  tororo: "https://cdn.jsdelivr.net/npm/live2d-widget-model-whitecat@1.0.5/assets/whitecat.model.json" // another super cute one!
 };
 
 function loadModel(modelName) {
