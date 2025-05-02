@@ -1,0 +1,65 @@
+function startGame() {
+    alert("Game loading... 💖✨ (You can link this to another page like projects.html)");
+  }
+  
+  // Cute glitter cursor effect
+  const trail = [];
+  let i = 0;
+  
+  document.addEventListener("mousemove", e => {
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.left = `${e.pageX}px`;
+    star.style.top = `${e.pageY}px`;
+    document.body.appendChild(star);
+    trail.push(star);
+    if (trail.length > 30) {
+      const old = trail.shift();
+      old.remove();
+    }
+  });
+  
+  const style = document.createElement("style");
+  style.textContent = `
+  .star {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #ffc0cb, transparent);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkle 0.6s ease-out forwards;
+  }
+  @keyframes sparkle {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2); }
+  }
+  `;
+  document.head.appendChild(style);
+
+  function updateBackgroundByTime() {
+    const hour = new Date().getHours();
+    let gradient = "";
+  
+    if (hour >= 6 && hour < 12) {
+      // Morning 🌸
+      gradient = "linear-gradient(120deg, #ffe0f0, #f9f6d2)";
+    } else if (hour >= 12 && hour < 17) {
+      // Afternoon 🌞
+      gradient = "linear-gradient(120deg, #d2f6f9, #e3f0ff)";
+    } else if (hour >= 17 && hour < 20) {
+      // Evening 🌇
+      gradient = "linear-gradient(120deg, #ffd6e0, #ffebd2)";
+    } else {
+      // Night 🌙
+      gradient = "linear-gradient(120deg, #dcd0ff, #cce0ff)";
+    }
+  
+    document.body.style.background = gradient;
+  }
+  
+  // Call it when the page loads
+  updateBackgroundByTime();
+  
+  
+  
