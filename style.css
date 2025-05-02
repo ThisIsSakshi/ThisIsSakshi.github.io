@@ -51,10 +51,10 @@ canvas#sakura {
   padding: 15px 30px;
   border-radius: 50px;
   border: none;
-  background-color: #ffb6c1; /* Light pink */
+  background-color: #ffb6c1;
   color: white;
-  cursor: pointer; /* Show pointer on button */
-  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3); /* Soft shadow */
+  /* ✨ No pointer cursor here, let your GIF shine! */
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
   transition: all 0.3s ease;
 }
 
@@ -109,4 +109,22 @@ body {
 body, html {
   height: 100%;
   background-size: cover; /* Ensure the gradient fills the entire page */
+}
+
+a, button, input, .clickable {
+  cursor: none; /* Don't show system cursor on hover */
+}
+
+.cursor-sparkle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none; /* super important to allow click-through */
+  z-index: 999999; /* ✨ bring to front */
+  width: 30px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.9;
+  transition: background-image 0.3s ease;
 }

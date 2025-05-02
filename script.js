@@ -92,3 +92,16 @@ function updateBackgroundByTime() {
 
 // Call it when the page loads
 updateBackgroundByTime();
+
+// Change cursor when hovering over clickable elements
+const clickableElements = document.querySelectorAll('button, a, input, textarea, select, .clickable');
+
+clickableElements.forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.backgroundImage = "url('assets/pointer.png')"; // Hover cursor
+  });
+
+  el.addEventListener('mouseleave', () => {
+    cursor.style.backgroundImage = "url('assets/cursor-heart.gif')"; // Default heart cursor
+  });
+});
