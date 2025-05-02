@@ -113,7 +113,7 @@ clickableElements.forEach(el => {
 window.addEventListener("DOMContentLoaded", () => {
   L2Dwidget.init({
     model: {
-      jsonPath: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json', // Model choice
+      jsonPath: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-izumi@1.0.5/assets/izumi.model.json',
       scale: 1
     },
     display: {
@@ -133,3 +133,4 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+
