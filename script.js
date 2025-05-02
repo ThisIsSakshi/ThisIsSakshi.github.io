@@ -110,54 +110,66 @@ clickableElements.forEach(el => {
 // Your existing startGame function (if any) can stay here!
 
 // 💖 Live2D cutie setup
-let currentModel = 'bunny';
+let currentModel = 'blackcat';
 
-    function loadModel(modelName) {
-      let modelUrl;
+function loadModel(modelName) {
+  let modelUrl;
 
-      if (modelName === 'bunny') {
-        modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json"; 
-      } else if (modelName === 'cat') {
-        modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-whitecat@1.0.5/assets/whitecat.model.json"; 
+  if (modelName === 'blackcat') {
+    modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-blackcat@1.0.0/assets/blackcat.model.json"; 
+  }
+
+  console.log("Loading model:", modelName); // Log model loading
+
+  // Remove any previous canvas
+  const oldCanvas = document.getElementById("live2dcanvas");
+  if (oldCanvas) oldCanvas.remove();
+
+  // Load the new model
+  try {
+    L2Dwidget.init({
+      model: {
+        jsonPath: modelUrl,
+        scale: 1
+      },
+      display: {
+        position: "right",
+        width: 150,
+        height: 300,
+        hOffset: 0,
+        vOffset: -20
+      },
+      mobile: {
+        show: true,
+        scale: 0.5
+      },
+      react: {
+        opacityDefault: 0.7,
+        opacityOnHover: 0.2
       }
-
-      // Remove old model canvas if it exists
-      const oldCanvas = document.getElementById("live2dcanvas");
-      if (oldCanvas) oldCanvas.remove();
-
-      // Load the new model
-      L2Dwidget.init({
-        model: {
-          jsonPath: modelUrl,
-          scale: 1
-        },
-        display: {
-          position: "right",
-          width: 150,
-          height: 300,
-          hOffset: 0,
-          vOffset: -20
-        },
-        react: {
-          opacityDefault: 0.7,
-          opacityOnHover: 0.2
-        }
-      });
-
-      // Delay event binding to ensure canvas is created
-      setTimeout(() => {
-        const newCanvas = document.getElementById("live2dcanvas");
-        newCanvas.style.pointerEvents = 'auto'; 
-        newCanvas.style.cursor = 'pointer';
-        newCanvas.addEventListener("click", toggleModel);
-      }, 500);
-    }
-
-    function toggleModel() {
-      currentModel = currentModel === 'bunny' ? 'cat' : 'bunny';
-      loadModel(currentModel);
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      loadModel(currentModel); // Load default bunny first
     });
+
+    console.log("Model loaded successfully"); // Success message
+  } catch (error) {
+    console.error("Error loading model:", error); // Error handling
+  }
+
+  // Delay event binding to ensure canvas is created
+  setTimeout(() => {
+    const newCanvas = document.getElementById("live2dcanvas");
+    if (newCanvas) {
+      newCanvas.style.pointerEvents = 'auto'; // Enable pointer events
+      newCanvas.style.cursor = 'pointer';
+      newCanvas.addEventListener("click", toggleModel);
+    }
+  }, 500);
+}
+
+function toggleModel() {
+  currentModel = currentModel === 'blackcat' ? 'blackcat' : 'blackcat'; // Black cat is static in this case
+  loadModel(currentModel);
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadModel(currentModel); // Load black cat first
+});
