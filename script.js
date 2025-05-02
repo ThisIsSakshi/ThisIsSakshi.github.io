@@ -113,11 +113,11 @@ clickableElements.forEach(el => {
 window.addEventListener("DOMContentLoaded", () => {
   L2Dwidget.init({
     model: {
-      jsonPath: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-izumi@1.0.5/assets/izumi.model.json',
+      jsonPath: "https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json",
       scale: 1
     },
     display: {
-      position: 'right',
+      position: "right",
       width: 150,
       height: 300,
       hOffset: 0,
