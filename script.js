@@ -118,50 +118,64 @@ const models = {
 // Function to load a model
 function loadModel(modelName) {
   const modelUrl = models[modelName];
-
   if (!modelUrl) {
     console.error("Model not found for:", modelName);
     return;
   }
 
+  // Remove old canvas
   const oldCanvas = document.getElementById("live2dcanvas");
-  if (oldCanvas) oldCanvas.remove();
+  if (oldCanvas) {
+    oldCanvas.remove();
+  }
 
-  // Delay to let canvas be removed
-  setTimeout(() => {
-    L2Dwidget.init({
-      model: {
-        jsonPath: modelUrl,
-        scale: 1
-      },
-      display: {
-        position: "right",
-        width: 150,
-        height: 300,
-        hOffset: 0,
-        vOffset: -20
-      },
-      mobile: {
-        show: true,
-        scale: 0.5
-      },
-      react: {
-        opacityDefault: 0.7,
-        opacityOnHover: 0.2
-      }
-    });
+  // Remove old script if exists
+  const oldScript = document.querySelector("script[src*='live2d-widget.min.js']");
+  if (oldScript) {
+    oldScript.remove();
+  }
 
-    // After canvas is added, set up click listener again
+  const script = document.createElement("script");
+  script.src = "https://unpkg.com/live2d-widget@3.1.4/lib/L2Dwidget.min.js";
+  script.onload = () => {
     setTimeout(() => {
-      const newCanvas = document.getElementById("live2dcanvas");
-      if (newCanvas) {
-        newCanvas.style.pointerEvents = 'auto';
-        newCanvas.style.cursor = 'pointer';
-        newCanvas.addEventListener("click", toggleModel);
-      }
-    }, 500);
-  }, 100);
+      L2Dwidget.init({
+        model: {
+          jsonPath: modelUrl,
+          scale: 1
+        },
+        display: {
+          position: "right",
+          width: 150,
+          height: 300,
+          hOffset: 0,
+          vOffset: -20
+        },
+        mobile: {
+          show: true,
+          scale: 0.5
+        },
+        react: {
+          opacityDefault: 0.7,
+          opacityOnHover: 0.2
+        }
+      });
+
+      // Click-to-switch again
+      setTimeout(() => {
+        const newCanvas = document.getElementById("live2dcanvas");
+        if (newCanvas) {
+          newCanvas.style.pointerEvents = 'auto';
+          newCanvas.style.cursor = 'pointer';
+          newCanvas.addEventListener("click", toggleModel);
+        }
+      }, 500);
+    }, 100);
+  };
+
+  document.body.appendChild(script);
 }
+
 
 // Toggle between models
 function toggleModel() {
