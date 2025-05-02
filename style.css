@@ -1,16 +1,16 @@
+/* Body Styles */
 body {
     margin: 0;
     padding: 0;
     overflow: hidden;
     font-family: 'Quicksand', sans-serif;
-    background: linear-gradient(120deg, #ffe0f0, #ffeaff); /* Default pastel */
+    background: linear-gradient(120deg, #ffe0f0, #ffeaff); /* Default pastel gradient */
     color: #333;
-    transition: background 2s ease-in-out; /* Smooth transition */
-    cursor: url('assets/cursor-heart.gif') 16 16, auto; 
-    transition: all 0.3s ease-in-out;
+    transition: background 2s ease-in-out; /* Smooth transition for background color change */
+    cursor: none; /* Hide default cursor to use custom one */
   }
   
-  
+  /* Canvas Styles for Sakura Blossoms (if you have a sakura.js script) */
   canvas#sakura {
     position: fixed;
     top: 0;
@@ -19,6 +19,7 @@ body {
     pointer-events: none;
   }
   
+  /* Container for Title and Subtitle */
   .container {
     position: relative;
     z-index: 1;
@@ -26,60 +27,78 @@ body {
     padding-top: 15%;
   }
   
+  /* Title Style */
   .title {
     font-family: 'Pacifico', cursive;
     font-size: 2.5rem;
-    color: #ff69b4;
+    color: #ff69b4; /* Hot pink */
     margin-bottom: 10px;
   }
   
+  /* Subtitle Style */
   .subtitle {
     font-size: 1.2rem;
-    color: #666;
+    color: #666; /* Grey color for subtitle */
     margin-bottom: 20px;
   }
   
+  /* Start Button Style */
   .start-btn {
     font-size: 1.2rem;
     padding: 15px 30px;
     border-radius: 50px;
     border: none;
-    background-color: #ffb6c1;
+    background-color: #ffb6c1; /* Light pink */
     color: white;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+    box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3); /* Soft shadow */
     transition: all 0.3s ease;
   }
   
+  /* Hover Effect for Start Button */
   .start-btn:hover {
-    background-color: #ff69b4;
-    transform: scale(1.05);
-  }
-
-  canvas#sakura {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 0;
-    pointer-events: none;
+    background-color: #ff69b4; /* Hot pink when hovered */
+    transform: scale(1.05); /* Slightly enlarge on hover */
   }
   
+  /* Body Hover Effect */
   body:hover {
-    transform: scale(1.05); 
+    transform: scale(1.05); /* Slightly enlarge the body when hovered */
   }
   
-
+  /* Custom Cursor Styles */
   .cursor-sparkle {
     position: fixed;
     top: 0;
     left: 0;
     pointer-events: none;
     z-index: 10000;
-    width: 30px;
-    height: 30px;
-    background-image: url('assets/sparkle.gif'); 
+    width: 30px; /* Size of the custom cursor */
+    height: 30px; /* Size of the custom cursor */
+    background-image: url('assets/cursor-heart.gif'); /* Path to the custom GIF */
     background-size: contain;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
+    opacity: 0.9; /* Slight opacity to make it look smoother */
+    transition: opacity 0.3s ease; /* Smooth transition */
+  }
+  
+  /* CSS for Glitter Stars (Optional, if you use glitter effects) */
+  .star {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: radial-gradient(circle, #ffc0cb, transparent); /* Light pink sparkles */
+    border-radius: 50%;
+    pointer-events: none;
+    animation: sparkle 0.6s ease-out forwards; /* Sparkle animation */
+  }
+  
+  @keyframes sparkle {
+    0% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(2); }
+  }
+  
+  /* For Smooth Background Change Based on Time of Day */
+  body {
+    transition: background 2s ease-in-out; /* Smooth transition for background change */
   }
   
