@@ -116,7 +116,7 @@ function loadModel(modelName) {
 
   // Change model URL if needed
   if (modelName === 'blackcat') {
-    modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-blackcat@1.0.0/assets/blackcat.model.json"; 
+    modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json"; 
   }
 
   console.log("Loading model:", modelName); // Log model loading
