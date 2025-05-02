@@ -62,3 +62,33 @@ body {
     pointer-events: none;
   }
   
+
+/* Make the body of the page have the cute GIF cursor */
+body {
+    cursor: url('assets/cursor-heart.gif'), auto; /* Replace with the path to your cute GIF cursor */
+  }
+  
+  /* Optional: Add a little sparkle effect when hovering */
+  body {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  body:hover {
+    transform: scale(1.05); /* Makes the cursor area "pop" a little */
+  }
+  
+  /* You can also add a tiny sparkle effect around the cursor */
+  .cursor-sparkle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 10000;
+    width: 30px;
+    height: 30px;
+    background-image: url('assets/sparkle.gif'); /* Replace with your sparkle GIF */
+    background-size: contain;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+  }
+  

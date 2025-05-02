@@ -62,4 +62,12 @@ function startGame() {
   updateBackgroundByTime();
   
   
-  
+// Create a function to move the cursor (GIF)
+const cursor = document.createElement('div');
+cursor.classList.add('cursor-sparkle');
+document.body.appendChild(cursor);
+
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.pageX - 15 + 'px'; // Move the cursor element to the mouse's position
+  cursor.style.top = e.pageY - 15 + 'px'; // Move the cursor element to the mouse's position
+});
