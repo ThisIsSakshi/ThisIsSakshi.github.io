@@ -108,71 +108,60 @@ clickableElements.forEach(el => {
 
 
 // Initialize model
-let currentModel = 'blackcat';
+let currentModel = 'hibiki';
 
-// Function to load the model
+// Add other working model names here
+const models = {
+  hibiki: "https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json",
+  tororo: "https://cdn.jsdelivr.net/npm/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json" // another super cute one!
+};
+
 function loadModel(modelName) {
-  let modelUrl;
+  const modelUrl = models[modelName];
+  if (!modelUrl) return;
 
-  // Change model URL if needed
-  if (modelName === 'blackcat') {
-    modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json"; 
-  }
-
-  console.log("Loading model:", modelName); // Log model loading
-
-  // Remove any previous canvas
+  // Remove previous canvas if it exists
   const oldCanvas = document.getElementById("live2dcanvas");
   if (oldCanvas) oldCanvas.remove();
 
-  // Try loading the model
-  try {
-    console.log("Initializing model with URL:", modelUrl);
-    L2Dwidget.init({
-      model: {
-        jsonPath: modelUrl,
-        scale: 1
-      },
-      display: {
-        position: "right",
-        width: 150,
-        height: 300,
-        hOffset: 0,
-        vOffset: -20
-      },
-      mobile: {
-        show: true,
-        scale: 0.5
-      },
-      react: {
-        opacityDefault: 0.7,
-        opacityOnHover: 0.2
-      }
-    });
+  L2Dwidget.init({
+    model: {
+      jsonPath: modelUrl,
+      scale: 1
+    },
+    display: {
+      position: "right",
+      width: 150,
+      height: 300,
+      hOffset: 0,
+      vOffset: -20
+    },
+    mobile: {
+      show: true,
+      scale: 0.5
+    },
+    react: {
+      opacityDefault: 0.7,
+      opacityOnHover: 0.2
+    }
+  });
 
-    console.log("Model loaded successfully"); // Success message
-  } catch (error) {
-    console.error("Error loading model:", error); // Error handling
-  }
-
-  // Delay event binding to ensure canvas is created
+  // Rebind click to toggle model
   setTimeout(() => {
-    const newCanvas = document.getElementById("live2dcanvas");
-    if (newCanvas) {
-      newCanvas.style.pointerEvents = 'auto'; // Enable pointer events
-      newCanvas.style.cursor = 'pointer';
-      newCanvas.addEventListener("click", toggleModel);
+    const canvas = document.getElementById("live2dcanvas");
+    if (canvas) {
+      canvas.style.pointerEvents = 'auto';
+      canvas.style.cursor = 'pointer';
+      canvas.addEventListener("click", toggleModel);
     }
   }, 500);
 }
 
-// Toggle function (in case you want to switch models later)
 function toggleModel() {
-  currentModel = currentModel === 'blackcat' ? 'blackcat' : 'blackcat'; // Only blackcat now
+  currentModel = currentModel === 'hibiki' ? 'tororo' : 'hibiki';
   loadModel(currentModel);
 }
 
-// Load the blackcat model when the page is ready
 window.addEventListener("DOMContentLoaded", () => {
-  loadModel(currentModel); // Load black cat model first
+  loadModel(currentModel);
 });
