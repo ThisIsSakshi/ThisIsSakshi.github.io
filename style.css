@@ -23,12 +23,20 @@ canvas#sakura {
 }
 
 /* Container for Title and Subtitle */
+/* Container for Title and Subtitle */
 .container {
   position: relative;
   z-index: 1;
+  height: 100vh; /* Full viewport height */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center */
+  align-items: center;     /* Horizontally center */
   text-align: center;
-  padding-top: 15%;  /* Adjust padding for the correct positioning */
+  padding: 20px;
+  box-sizing: border-box;
 }
+
 
 /* Title Style */
 .title {
