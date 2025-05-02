@@ -108,7 +108,7 @@ clickableElements.forEach(el => {
 
 
 // Initialize model
-let currentModel = 'hibiki';
+let currentModel = 'tororo';
 
 const models = {
   tororo: "https://cdn.jsdelivr.net/npm/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json",
