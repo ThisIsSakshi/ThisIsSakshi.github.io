@@ -105,3 +105,31 @@ clickableElements.forEach(el => {
     cursor.style.backgroundImage = "url('assets/cursor-heart.gif')"; // Default heart cursor
   });
 });
+
+
+// Your existing startGame function (if any) can stay here!
+
+// 💖 Live2D cutie setup
+window.addEventListener("DOMContentLoaded", () => {
+  L2Dwidget.init({
+    model: {
+      jsonPath: 'https://cdn.jsdelivr.net/npm/live2d-widget-model-shizuku@1.0.5/assets/shizuku.model.json', // Model choice
+      scale: 1
+    },
+    display: {
+      position: 'right',
+      width: 150,
+      height: 300,
+      hOffset: 0,
+      vOffset: -20
+    },
+    mobile: {
+      show: true,
+      scale: 0.5
+    },
+    react: {
+      opacityDefault: 0.7,
+      opacityOnHover: 0.2
+    }
+  });
+});
