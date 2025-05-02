@@ -113,8 +113,6 @@ let currentModel = 'hibiki';
 const models = {
   hibiki: "https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json",
   tororo: "https://cdn.jsdelivr.net/npm/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json",
-  rem: "https://cdn.jsdelivr.net/npm/live2d-widget-model-rem@1.0.5/assets/rem.model.json",
-  haru: "https://cdn.jsdelivr.net/npm/live2d-widget-model-haru@1.0.5/assets/haru01.model.json",
   izumi: "https://cdn.jsdelivr.net/npm/live2d-widget-model-izumi@1.0.5/assets/izumi.model.json",
   z16: "https://cdn.jsdelivr.net/npm/live2d-widget-model-z16@1.0.5/assets/z16.model.json"
 };
