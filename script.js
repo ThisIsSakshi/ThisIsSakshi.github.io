@@ -107,12 +107,14 @@ clickableElements.forEach(el => {
 });
 
 
+// Initialize model
 let currentModel = 'blackcat';
 
 // Function to load the model
 function loadModel(modelName) {
   let modelUrl;
 
+  // Change model URL if needed
   if (modelName === 'blackcat') {
     modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-blackcat@1.0.0/assets/blackcat.model.json"; 
   }
