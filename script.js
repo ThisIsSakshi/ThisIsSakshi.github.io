@@ -107,11 +107,9 @@ clickableElements.forEach(el => {
 });
 
 
-// Your existing startGame function (if any) can stay here!
-
-// 💖 Live2D cutie setup
 let currentModel = 'blackcat';
 
+// Function to load the model
 function loadModel(modelName) {
   let modelUrl;
 
@@ -125,8 +123,9 @@ function loadModel(modelName) {
   const oldCanvas = document.getElementById("live2dcanvas");
   if (oldCanvas) oldCanvas.remove();
 
-  // Load the new model
+  // Try loading the model
   try {
+    console.log("Initializing model with URL:", modelUrl);
     L2Dwidget.init({
       model: {
         jsonPath: modelUrl,
@@ -165,11 +164,13 @@ function loadModel(modelName) {
   }, 500);
 }
 
+// Toggle function (in case you want to switch models later)
 function toggleModel() {
-  currentModel = currentModel === 'blackcat' ? 'blackcat' : 'blackcat'; // Black cat is static in this case
+  currentModel = currentModel === 'blackcat' ? 'blackcat' : 'blackcat'; // Only blackcat now
   loadModel(currentModel);
 }
 
+// Load the blackcat model when the page is ready
 window.addEventListener("DOMContentLoaded", () => {
-  loadModel(currentModel); // Load black cat first
+  loadModel(currentModel); // Load black cat model first
 });
