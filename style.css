@@ -159,3 +159,7 @@ a, button, input, .clickable {
 .model-buttons button:hover {
   background-color: #ffb6c1;
 }
+
+#live2dcanvas {
+  transition: opacity 0.3s ease-in-out;
+}

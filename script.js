@@ -110,58 +110,66 @@ clickableElements.forEach(el => {
 // Initialize model
 let currentModel = 'hibiki';
 
-// Add other working model names here
 const models = {
   hibiki: "https://cdn.jsdelivr.net/npm/live2d-widget-model-hibiki@1.0.5/assets/hibiki.model.json",
-  tororo: "https://cdn.jsdelivr.net/npm/live2d-widget-model-whitecat@1.0.5/assets/whitecat.model.json" // another super cute one!
+  tororo: "https://cdn.jsdelivr.net/npm/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json"
 };
 
+// Function to load a model
 function loadModel(modelName) {
   const modelUrl = models[modelName];
-  if (!modelUrl) return;
 
-  // Remove previous canvas if it exists
+  if (!modelUrl) {
+    console.error("Model not found for:", modelName);
+    return;
+  }
+
   const oldCanvas = document.getElementById("live2dcanvas");
   if (oldCanvas) oldCanvas.remove();
 
-  L2Dwidget.init({
-    model: {
-      jsonPath: modelUrl,
-      scale: 1
-    },
-    display: {
-      position: "right",
-      width: 150,
-      height: 300,
-      hOffset: 0,
-      vOffset: -20
-    },
-    mobile: {
-      show: true,
-      scale: 0.5
-    },
-    react: {
-      opacityDefault: 0.7,
-      opacityOnHover: 0.2
-    }
-  });
-
-  // Rebind click to toggle model
+  // Delay to let canvas be removed
   setTimeout(() => {
-    const canvas = document.getElementById("live2dcanvas");
-    if (canvas) {
-      canvas.style.pointerEvents = 'auto';
-      canvas.style.cursor = 'pointer';
-      canvas.addEventListener("click", toggleModel);
-    }
-  }, 500);
+    L2Dwidget.init({
+      model: {
+        jsonPath: modelUrl,
+        scale: 1
+      },
+      display: {
+        position: "right",
+        width: 150,
+        height: 300,
+        hOffset: 0,
+        vOffset: -20
+      },
+      mobile: {
+        show: true,
+        scale: 0.5
+      },
+      react: {
+        opacityDefault: 0.7,
+        opacityOnHover: 0.2
+      }
+    });
+
+    // After canvas is added, set up click listener again
+    setTimeout(() => {
+      const newCanvas = document.getElementById("live2dcanvas");
+      if (newCanvas) {
+        newCanvas.style.pointerEvents = 'auto';
+        newCanvas.style.cursor = 'pointer';
+        newCanvas.addEventListener("click", toggleModel);
+      }
+    }, 500);
+  }, 100);
 }
 
+// Toggle between models
 function toggleModel() {
   currentModel = currentModel === 'hibiki' ? 'tororo' : 'hibiki';
   loadModel(currentModel);
 }
 
+// Load initial model when page is ready
 window.addEventListener("DOMContentLoaded", () => {
   loadModel(currentModel);
 });
