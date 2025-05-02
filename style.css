@@ -136,3 +136,26 @@ a, button, input, .clickable {
   opacity: 0.9;
   transition: background-image 0.3s ease;
 }
+
+
+.model-buttons {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.model-buttons button {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 16px;
+  background-color: #ffc0cb;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.model-buttons button:hover {
+  background-color: #ffb6c1;
+}

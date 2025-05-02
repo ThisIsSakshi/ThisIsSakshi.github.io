@@ -110,10 +110,25 @@ clickableElements.forEach(el => {
 // Your existing startGame function (if any) can stay here!
 
 // 💖 Live2D cutie setup
-window.addEventListener("DOMContentLoaded", () => {
+let currentModel = null;
+
+function loadModel(modelName) {
+  let modelUrl;
+
+  if (modelName === 'bunny') {
+    modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-tororo@1.0.5/assets/tororo.model.json"; // kawaii bunny 🐰
+  } else if (modelName === 'cat') {
+    modelUrl = "https://cdn.jsdelivr.net/npm/live2d-widget-model-whitecat@1.0.5/assets/whitecat.model.json"; // soft white cat 🐱
+  }
+
+  // Remove existing canvas
+  const oldCanvas = document.querySelector("#live2dcanvas");
+  if (oldCanvas) oldCanvas.remove();
+
+  // Load new model
   L2Dwidget.init({
     model: {
-      jsonPath: "https://cdn.jsdelivr.net/npm/live2d-widget-model-wanko@1.0.5/assets/wanko.model.json",
+      jsonPath: modelUrl,
       scale: 1
     },
     display: {
@@ -132,5 +147,9 @@ window.addEventListener("DOMContentLoaded", () => {
       opacityOnHover: 0.2
     }
   });
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadModel("bunny"); // Load bunny first by default 🐰💕
 });
 
