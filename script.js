@@ -1,5 +1,5 @@
 function startGame() {
-    alert("Game loading... 💖✨, Naah this oage is yet to come");
+    alert("Game loading... 💖✨, Naah this page is yet to come");
   }
   
   // Cute glitter cursor effect
