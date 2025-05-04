@@ -27,3 +27,12 @@ avatar.addEventListener("drop", (e) => {
   const msg = messages[id] || "✨ You discovered a secret! ✨";
   infoPopup.textContent = msg;
 });
+
+const cursor = document.createElement("div");
+cursor.classList.add("cursor-sparkle");
+document.body.appendChild(cursor);
+
+document.addEventListener("mousemove", (e) => {
+  cursor.style.top = e.pageY + "px";
+  cursor.style.left = e.pageX + "px";
+});

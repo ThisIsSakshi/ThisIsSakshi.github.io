@@ -23,7 +23,6 @@ canvas#sakura {
 }
 
 /* Container for Title and Subtitle */
-/* Container for Title and Subtitle */
 .container {
   position: relative;
   z-index: 1;
@@ -83,14 +82,15 @@ body:hover {
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 10000;
-  width: 30px; /* Size of the custom cursor */
-  height: 30px; /* Size of the custom cursor */
+  z-index: 999999; /* ✨ bring to front */
+  width: 30px;
+  height: 30px;
   background-image: url('assets/cursor-heart.gif'); /* Path to the custom GIF */
   background-size: contain;
-  opacity: 0.9; /* Slight opacity to make it look smoother */
-  transition: opacity 0.3s ease; /* Smooth transition */
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
 }
+
 
 /* CSS for Glitter Stars (Optional, if you use glitter effects) */
 .star {

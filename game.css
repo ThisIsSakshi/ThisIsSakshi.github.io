@@ -24,15 +24,15 @@ body {
   
   .avatar {
     position: absolute;
-    bottom: 100px;
+    top: 50%; 
     left: 50%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%); 
     text-align: center;
     z-index: 2;
   }
   
   .avatar img {
-    width: 150px;
+    width: 250px;
   }
   
   .speech {
@@ -63,7 +63,7 @@ body {
   
   .info-popup {
     position: absolute;
-    top: 20px;
+    top: 40px;
     left: 50%;
     transform: translateX(-50%);
     background: #fff8fb;
