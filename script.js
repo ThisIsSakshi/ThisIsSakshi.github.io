@@ -30,7 +30,7 @@ document.head.appendChild(style);
 
 // Fun Game Start Button
 function startGame() {
-    alert("Game loading... 💖✨, Naah this page is yet to come");
+  window.location.href = "game.html"; // ✨ navigate to new page
 }
 
 // Cute glitter cursor effect
