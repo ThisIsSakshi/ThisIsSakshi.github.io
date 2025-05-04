@@ -30,7 +30,7 @@ document.head.appendChild(style);
 
 // Fun Game Start Button
 function startGame() {
-  window.location.href = "game.html"; // ✨ navigate to new page
+  window.location.href = "game"; // ✨ navigate to new page
 }
 
 // Cute glitter cursor effect
@@ -193,3 +193,7 @@ function toggleModel() {
 window.addEventListener("DOMContentLoaded", () => {
   loadModel(currentModel);
 });
+
+if (window.location.pathname === "/game.html" && !window.location.href.includes("/game")) {
+  window.location.pathname = "/game";
+}
