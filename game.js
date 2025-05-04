@@ -2,8 +2,8 @@ const avatar = document.getElementById("you");
 const infoPopup = document.getElementById("infoPopup");
 
 const messages = {
-  bag: "📚 I did my schooling from XYZ School in Jabalpur 🏫",
-  degree: "🎓 I completed my Bachelor's from ABC College 💕",
+  bag: "📚 I did my schooling from MVM School in Jabalpur 🏫",
+  degree: "🎓 I completed my Bachelor's from GGITS College 💕",
   laptop: "💻 I'm a Python Backend Dev with 6+ years experience 👩‍💻",
   wand: "🪄 I'm skilled in Flask, Ansible, PostgreSQL & more 🌟",
   book: "📁 I've built cool projects like a Portfolio Site, API systems etc. 🚀"
