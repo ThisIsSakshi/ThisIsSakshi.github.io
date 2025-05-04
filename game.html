@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>ThisIsSakshi – Game Mode 🎮✨</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sakshi's Game Mode</title>
+  <link rel="stylesheet" href="game.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <canvas id="sakura"></canvas> <!-- Blossom overlay -->
+  <div class="game-container">
 
-  <div class="container fade-in">
-    <h1 class="title">🎮 Game Mode Coming Soon... 💻✨</h1>
-    <p class="subtitle">Stay tuned, cutie! Something magical is brewing 🧪💫</p>
-    <a href="index.html" class="start-btn">👈 Back to Home</a>
+    <!-- Your Avatar -->
+    <div id="you" class="avatar">
+      <img src="assets/avatar-you.png" alt="Sakshi Avatar" />
+      <div class="speech">Hii 👋💖</div>
+    </div>
+
+    <!-- Draggable Items -->
+    <div class="items">
+      <img src="assets/bag.png" id="bag" class="draggable" draggable="true" title="My Schooling" />
+      <img src="assets/degree.png" id="degree" class="draggable" draggable="true" title="My College" />
+      <img src="assets/laptop.png" id="laptop" class="draggable" draggable="true" title="My Experience" />
+      <img src="assets/wand.png" id="wand" class="draggable" draggable="true" title="My Skills" />
+      <img src="assets/book.png" id="book" class="draggable" draggable="true" title="My Projects" />
+    </div>
+
+    <!-- Info Pop-up -->
+    <div id="infoPopup" class="info-popup">✨ Drag an item to me! ✨</div>
   </div>
 
-  <!-- Scripts for functionality -->
-  <script src="script.js"></script>
-  <script src="sakura.js"></script>
+  <script src="game.js"></script>
 </body>
 </html>
