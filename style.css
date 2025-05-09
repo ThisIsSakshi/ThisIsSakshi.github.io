@@ -163,3 +163,10 @@ a, button, input, .clickable {
 #live2dcanvas {
   transition: opacity 0.3s ease-in-out;
 }
+
+* {
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
