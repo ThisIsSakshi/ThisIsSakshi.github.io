@@ -1,37 +1,67 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sakshi's Game Mode</title>
-  <link rel="stylesheet" href="game.css" />
-  <link rel="stylesheet" href="../style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sakshi's Candy Quest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./game.css" />
 </head>
 <body>
+  <div class="aurora"></div>
 
-  <!-- Canvas for Sakura Blossoms -->
-  <canvas id="sakura"></canvas>
-
-  <div class="game-container">
-    <!-- My Avatar -->
-    <div id="you" class="avatar">
-      <div class="speech">I know this page looks stupid, but I promose I'm trying 👋💖</div>
-      <img src="../assets/avatar-you.png" alt="Sakshi Avatar" />
+  <header class="hud">
+    <a class="home-link" href="../">← Home</a>
+    <div class="brand">Sakshi's Candy Quest</div>
+    <div class="stats">
+      <span>Coins <b id="coinCount">0</b></span>
+      <span>Zone <b id="zoneName">Start</b></span>
     </div>
+  </header>
 
-    <!-- Draggable Items -->
-    <div class="items">
-      <img src="../assets/bag.png" id="bag" class="draggable" draggable="true" title="My Schooling" />
-      <img src="../assets/degree.png" id="degree" class="draggable" draggable="true" title="My College" />
-      <img src="../assets/laptop.png" id="laptop" class="draggable" draggable="true" title="My Experience" />
-      <img src="../assets/wand.png" id="wand" class="draggable" draggable="true" title="My Skills" />
-      <img src="../assets/book.png" id="book" class="draggable" draggable="true" title="My Projects" />
-    </div>
+  <main class="layout">
+    <section class="game-shell">
+      <div id="viewport" class="viewport">
+        <div id="world" class="world">
+          <div class="sky-layer clouds-a"></div>
+          <div class="sky-layer clouds-b"></div>
+          <div class="sparkles"></div>
+          <div class="hills"></div>
+          <div class="ground"></div>
 
-    <!-- Info Pop-up -->
-    <div id="infoPopup" class="info-popup">✨ Drag an item to me! ✨</div>
-  </div>
+          <div id="player" class="player">
+            <div id="playerSprite" class="player-sprite"></div>
+          </div>
 
-  <script src="game.js"></script>
+          <div class="coin" style="left:430px"></div>
+          <div class="coin" style="left:980px"></div>
+          <div class="coin" style="left:1500px"></div>
+          <div class="coin" style="left:2120px"></div>
+          <div class="coin" style="left:2720px"></div>
+
+          <button class="pipe" data-zone="About" data-x="640">About</button>
+          <button class="pipe" data-zone="Skills" data-x="1270">Skills</button>
+          <button class="pipe" data-zone="Projects" data-x="1910">Projects</button>
+          <button class="pipe" data-zone="Contact" data-x="2550">Contact</button>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="leftBtn">◀</button>
+        <button id="jumpBtn">▲</button>
+        <button id="rightBtn">▶</button>
+      </div>
+    </section>
+
+    <aside id="panel" class="panel">
+      <h2 id="panelTitle">Welcome</h2>
+      <p id="panelText">Move with Arrow / A D, jump with W or Space.</p>
+      <a id="panelLink" class="btn" href="#" target="_blank" rel="noreferrer">Open Link</a>
+    </aside>
+  </main>
+
+  <script src="./game.js"></script>
 </body>
 </html>
