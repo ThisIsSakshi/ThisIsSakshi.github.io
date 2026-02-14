@@ -71,11 +71,6 @@ canvas#sakura {
   transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
-/* Body Hover Effect */
-body:hover {
-  transform: scale(1.05); /* Slightly enlarge the body when hovered */
-}
-
 /* Custom Cursor Styles */
 .cursor-sparkle {
   position: fixed;

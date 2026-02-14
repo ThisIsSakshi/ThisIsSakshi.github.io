@@ -3,12 +3,6 @@ const cursor = document.createElement('div');
 cursor.classList.add('cursor-sparkle');
 document.body.appendChild(cursor);
 
-// Update the cursor's position as the mouse moves
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.pageX - 15 + 'px'; // Move the cursor element to the mouse's position
-  cursor.style.top = e.pageY - 15 + 'px'; // Adjust if necessary based on GIF size
-});
-
 // Add a class for the sparkle effect on the cursor
 const style = document.createElement("style");
 style.textContent = `
@@ -35,20 +29,44 @@ function startGame() {
 
 // Cute glitter cursor effect
 const trail = [];
-let i = 0;
+const MAX_TRAIL_STARS = 30;
+const STAR_MIN_INTERVAL_MS = 22;
+let pointerX = 0;
+let pointerY = 0;
+let pointerMoved = false;
+let lastStarTimestamp = 0;
 
-document.addEventListener("mousemove", e => {
+document.addEventListener("mousemove", (e) => {
+  pointerX = e.pageX;
+  pointerY = e.pageY;
+  pointerMoved = true;
+  cursor.style.left = `${pointerX - 15}px`;
+  cursor.style.top = `${pointerY - 15}px`;
+});
+
+function spawnStar(x, y) {
   const star = document.createElement("div");
   star.className = "star";
-  star.style.left = `${e.pageX}px`;
-  star.style.top = `${e.pageY}px`;
+  star.style.left = `${x}px`;
+  star.style.top = `${y}px`;
   document.body.appendChild(star);
   trail.push(star);
-  if (trail.length > 30) {
+  if (trail.length > MAX_TRAIL_STARS) {
     const old = trail.shift();
     old.remove();
   }
-});
+}
+
+function animateTrail(timestamp) {
+  if (pointerMoved && timestamp - lastStarTimestamp >= STAR_MIN_INTERVAL_MS) {
+    spawnStar(pointerX, pointerY);
+    pointerMoved = false;
+    lastStarTimestamp = timestamp;
+  }
+  requestAnimationFrame(animateTrail);
+}
+
+requestAnimationFrame(animateTrail);
 
 const styleStars = document.createElement("style");
 styleStars.textContent = `

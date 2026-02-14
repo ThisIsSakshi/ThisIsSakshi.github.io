@@ -1,6 +1,9 @@
 (function() {
   const canvas = document.getElementById("sakura");
+  if (!canvas) return;
+
   const ctx = canvas.getContext("2d");
+  if (!ctx) return;
 
   let width = window.innerWidth;
   let height = window.innerHeight;
