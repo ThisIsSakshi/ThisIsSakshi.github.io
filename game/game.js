@@ -30,6 +30,7 @@ const els = {
   panelTitle: document.getElementById("panelTitle"),
   panelText: document.getElementById("panelText"),
   panelLink: document.getElementById("panelLink"),
+  soundBtn: document.getElementById("soundBtn"),
   leftBtn: document.getElementById("leftBtn"),
   rightBtn: document.getElementById("rightBtn"),
   jumpBtn: document.getElementById("jumpBtn")
@@ -55,8 +56,117 @@ const state = {
   coins: 0,
   keys: new Set(),
   activeZone: "",
-  typingTimer: null
+  typingTimer: null,
+  soundEnabled: true
 };
+
+const audio = {
+  ctx: null,
+  master: null,
+  unlocked: false
+};
+
+function initAudio() {
+  if (audio.ctx) return;
+  const AudioCtx = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtx) return;
+
+  audio.ctx = new AudioCtx();
+  audio.master = audio.ctx.createGain();
+  audio.master.gain.value = 0.11;
+  audio.master.connect(audio.ctx.destination);
+}
+
+async function unlockAudio() {
+  initAudio();
+  if (!audio.ctx) return false;
+
+  if (audio.ctx.state === "suspended") {
+    try {
+      await audio.ctx.resume();
+    } catch (_) {
+      return false;
+    }
+  }
+
+  audio.unlocked = audio.ctx.state === "running";
+  return audio.unlocked;
+}
+
+function playTone({
+  freq = 440,
+  duration = 0.09,
+  type = "sine",
+  gain = 0.12,
+  glideTo = 0,
+  offset = 0
+} = {}) {
+  if (!state.soundEnabled || !audio.unlocked || !audio.ctx || !audio.master) return;
+
+  const now = audio.ctx.currentTime + offset;
+  const osc = audio.ctx.createOscillator();
+  const amp = audio.ctx.createGain();
+
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, now);
+  if (glideTo > 0) {
+    osc.frequency.exponentialRampToValueAtTime(glideTo, now + duration);
+  }
+
+  amp.gain.setValueAtTime(0.0001, now);
+  amp.gain.exponentialRampToValueAtTime(gain, now + 0.01);
+  amp.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+  osc.connect(amp);
+  amp.connect(audio.master);
+  osc.start(now);
+  osc.stop(now + duration + 0.02);
+}
+
+function playJumpSound() {
+  playTone({ freq: 260, glideTo: 520, type: "square", duration: 0.1, gain: 0.08 });
+}
+
+function playCoinSound() {
+  playTone({ freq: 880, glideTo: 1240, type: "triangle", duration: 0.08, gain: 0.1 });
+  playTone({ freq: 1320, glideTo: 1580, type: "triangle", duration: 0.08, gain: 0.08, offset: 0.05 });
+}
+
+function playZoneSound() {
+  playTone({ freq: 510, glideTo: 680, type: "sine", duration: 0.09, gain: 0.08 });
+  playTone({ freq: 740, glideTo: 960, type: "sine", duration: 0.1, gain: 0.07, offset: 0.06 });
+}
+
+function updateSoundButton() {
+  if (!els.soundBtn) return;
+  els.soundBtn.textContent = state.soundEnabled ? "🔊 Sound" : "🔈 Muted";
+  els.soundBtn.setAttribute("aria-pressed", String(!state.soundEnabled));
+}
+
+function setupSoundControls() {
+  updateSoundButton();
+
+  const unlockOnFirstGesture = () => {
+    unlockAudio();
+    window.removeEventListener("pointerdown", unlockOnFirstGesture);
+    window.removeEventListener("keydown", unlockOnFirstGesture);
+    window.removeEventListener("touchstart", unlockOnFirstGesture);
+  };
+
+  window.addEventListener("pointerdown", unlockOnFirstGesture, { passive: true });
+  window.addEventListener("keydown", unlockOnFirstGesture);
+  window.addEventListener("touchstart", unlockOnFirstGesture, { passive: true });
+
+  if (!els.soundBtn) return;
+  els.soundBtn.addEventListener("click", async () => {
+    await unlockAudio();
+    state.soundEnabled = !state.soundEnabled;
+    updateSoundButton();
+    if (state.soundEnabled) {
+      playTone({ freq: 620, glideTo: 860, type: "triangle", duration: 0.08, gain: 0.07 });
+    }
+  });
+}
 
 function typeText(el, text, speed = 17) {
   if (state.typingTimer) clearInterval(state.typingTimer);
@@ -84,6 +194,7 @@ function setPanel(zone) {
 
   state.activeZone = zone;
   setSakuraVisibility(zone);
+  playZoneSound();
   els.zoneName.textContent = zone;
   els.panelTitle.textContent = zone;
   typeText(els.panelText, info.text);
@@ -121,6 +232,7 @@ function updateCoins() {
       coin.classList.add("collected");
       state.coins += 1;
       els.coinCount.textContent = String(state.coins);
+      playCoinSound();
       setTimeout(() => coin.remove(), 340);
     }
   });
@@ -138,6 +250,7 @@ function readInput() {
   if (jump && state.onGround) {
     state.vy = cfg.jumpPower;
     state.onGround = false;
+    playJumpSound();
     els.playerSprite.classList.add("jump");
     setTimeout(() => els.playerSprite.classList.remove("jump"), 180);
   }
@@ -230,6 +343,8 @@ window.addEventListener("keyup", (e) => state.keys.delete(e.key.toLowerCase()));
 bindHold(els.leftBtn, "arrowleft");
 bindHold(els.rightBtn, "arrowright");
 bindHold(els.jumpBtn, " ");
+
+setupSoundControls();
 
 els.viewport.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
 

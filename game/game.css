@@ -78,6 +78,28 @@ body.hide-sakura #sakura{opacity:0}
   font-weight:800;
   font-size:18px;
 }
+.hud-tools{
+  justify-self:end;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.sound-btn{
+  border:none;
+  border-radius:999px;
+  padding:8px 12px;
+  font-family:"Baloo 2",sans-serif;
+  font-weight:800;
+  font-size:14px;
+  color:#fff;
+  background:linear-gradient(135deg,var(--pink),var(--pink2));
+  box-shadow:0 8px 16px #ff5fa24a;
+  cursor:pointer;
+  white-space:nowrap;
+}
+.sound-btn[aria-pressed="true"]{
+  background:linear-gradient(135deg,#b4a8bf,#9988a8);
+}
 
 .layout{
   position:relative;
@@ -311,5 +333,7 @@ body.hide-sakura #sakura{opacity:0}
 @media (max-width:860px){
   .brand{font-size:10px}
   .stats{font-size:15px}
+  .hud-tools{gap:6px}
+  .sound-btn{font-size:12px;padding:7px 10px}
   .viewport{height:340px}
 }
