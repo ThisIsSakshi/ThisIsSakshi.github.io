@@ -1,19 +1,162 @@
 const profile = {
   About: {
-    text: "Hi, this is Sakshi. I build fast, thoughtful products with polished UI and clean engineering.",
-    link: "mailto:thisissakshisharma@gmail.com"
+    name: "Sakshi Sharma",
+    title: "Senior Python Developer | Backend Engineer",
+    location: "India",
+    email: "mailto:thisissakshisharma@gmail.com",
+    github: "https://github.com/ThisIsSakshi",
+    linkedin: "https://www.linkedin.com/in/its-sakshi/",
+    summary: `
+      Hi, I'm Sakshi - a senior Python developer and technical mentor
+      specializing in backend engineering, scalable system design, and
+      workflow-driven applications.
+
+      I build production-grade systems using Flask, SQLAlchemy 2.0,
+      PostgreSQL, and modern frontend integrations. I focus on clean
+      architecture, performance optimization, and maintainable code.
+    `
   },
+
   Skills: {
-    text: "Tech stack: JavaScript, React, Node.js, Python, SQL, Git, APIs, and product-minded problem solving.",
-    link: "https://github.com/ThisIsSakshi"
+    Languages: [
+      "Python",
+      "JavaScript",
+      "SQL",
+      "HTML5",
+      "CSS3"
+    ],
+
+    Frameworks: [
+      "Flask",
+      "Django",
+      "Flask-WTF",
+      "Bulma CSS"
+    ],
+
+    Databases: [
+      "PostgreSQL",
+      "SQLite"
+    ],
+
+    ORM_Tools: [
+      "SQLAlchemy 2.0"
+    ],
+
+    DevOps_Cloud: [
+      "AWS",
+      "Git",
+      "GitHub",
+      "Linux"
+    ],
+
+    Concepts: [
+      "REST API Design",
+      "Relational Database Design",
+      "Workflow Systems",
+      "Caching Strategies",
+      "Authentication & Authorization",
+      "Secure Form Handling",
+      "System Architecture",
+      "Audit Trails & Logging"
+    ],
+
+    profileLink: "https://github.com/ThisIsSakshi"
   },
-  Projects: {
-    text: "I ship web products, dashboards, and automation projects focused on performance and business impact.",
-    link: "https://github.com/ThisIsSakshi?tab=repositories"
-  },
+
+  Experience: [
+    {
+      company: "Net-Square Solutions",
+      role: "Python Developer",
+      duration: "June 2024 - Present",
+      location: "Remote",
+      clients: ["BT"],
+      responsibilities: [
+        "Designed and developed internal guest, asset, and logistics management systems for large-scale event operations",
+        "Implemented guest check-in workflows and attendance tracking modules",
+        "Built T-shirt allocation and hotel night management features",
+        "Designed relational database schema using SQLAlchemy 2.0 standards",
+        "Ensured scalable backend architecture using Flask"
+      ],
+      technologies: [
+        "Python",
+        "Flask",
+        "PostgreSQL",
+        "SQLAlchemy 2.0"
+      ]
+    },
+    {
+      company: "UST Global",
+      role: "Lead Software Developer",
+      duration: "November 2018 - June 2024",
+      location: "India",
+      clients: ["NetApp", "Major Insurance Client", "Internal Finance & HR"],
+      responsibilities: [
+        "Led backend development and architectural decisions across multiple enterprise solutions",
+        "Migrated backend systems to ASUP.NEXT platform ensuring seamless data continuity",
+        "Optimized data retrieval using parallel processing techniques from platform REST APIs",
+        "Built automated insurance validation systems for enterprise clients",
+        "Developed internal automation and ticketing platforms for HR and financial operations",
+        "Implemented performance-focused backend services using Flask and Python-based microservices",
+        "Collaborated with cross-functional teams for production deployments and CI/CD pipelines"
+      ],
+      technologies: [
+        "Python",
+        "Flask",
+        "Nuclio",
+        "MongoDB",
+        "Solr",
+        "Azure",
+        "PyMuPDF",
+        "PyPDF4"
+      ]
+    }
+  ],
+
+  Projects: [
+    {
+      name: "Budgio",
+      description: `
+        A full-scale budget management and approval workflow system.
+        Features request handling, multi-level approvals, dynamic
+        request types, asset tagging, notifications, and audit trails.
+      `,
+      techStack: ["Flask", "SQLAlchemy 2.0", "PostgreSQL", "Bulma"],
+      link: null
+    },
+    {
+      name: "Snoopcon",
+      description: `
+        Guest management and event tracking system with T-shirt
+        mapping, hotel nights tracking, and relational data modeling.
+      `,
+      techStack: ["Flask", "PostgreSQL", "Flask-WTF"],
+      link: null
+    },
+    {
+      name: "Supersafe",
+      description: `
+        Pentest and domain management system with dynamic forms,
+        caching, and secure request lifecycle handling.
+      `,
+      techStack: ["Flask", "SQLAlchemy", "JavaScript"],
+      link: null
+    }
+  ],
+
+  Achievements: [
+    "Designed full relational systems from scratch",
+    "Built dynamic DB-driven form engines",
+    "Mentored developers on production-grade backend practices",
+    "Optimized database performance using execution-level control"
+  ],
+
   Contact: {
-    text: "Open to roles and collaborations. Let's build something delightful and high-impact.",
-    link: "https://www.linkedin.com/in/its-sakshi/"
+    message: "Open to backend engineering roles, system design projects, and technical collaborations.",
+    email: "mailto:thisissakshisharma@gmail.com",
+    linkedin: "https://www.linkedin.com/in/its-sakshi/",
+    github: "https://github.com/ThisIsSakshi",
+    instagram: "https://www.instagram.com/emotional_geek/",
+    facebook: "https://www.facebook.com/This.is.Sakshi"
   }
 };
 
@@ -29,7 +172,6 @@ const els = {
   panel: document.getElementById("panel"),
   panelTitle: document.getElementById("panelTitle"),
   panelText: document.getElementById("panelText"),
-  panelLink: document.getElementById("panelLink"),
   soundBtn: document.getElementById("soundBtn"),
   leftBtn: document.getElementById("leftBtn"),
   rightBtn: document.getElementById("rightBtn"),
@@ -37,7 +179,7 @@ const els = {
 };
 
 const cfg = {
-  worldWidth: 3400,
+  worldWidth: 4200,
   playerWidth: 44,
   groundY: 72,
   speed: 4.4,
@@ -56,7 +198,6 @@ const state = {
   coins: 0,
   keys: new Set(),
   activeZone: "",
-  typingTimer: null,
   soundEnabled: true
 };
 
@@ -168,20 +309,152 @@ function setupSoundControls() {
   });
 }
 
-function typeText(el, text, speed = 17) {
-  if (state.typingTimer) clearInterval(state.typingTimer);
-  el.textContent = "";
-  let i = 0;
+const skillKeyNames = {
+  ORM_Tools: "ORM & Tools",
+  DevOps_Cloud: "DevOps & Cloud"
+};
 
-  state.typingTimer = setInterval(() => {
-    el.textContent += text[i] || "";
-    i += 1;
-    if (i >= text.length) {
-      clearInterval(state.typingTimer);
-      state.typingTimer = null;
-    }
-  }, speed);
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, (char) => {
+    const map = {
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;"
+    };
+    return map[char];
+  });
 }
+
+function splitParagraphs(text) {
+  return String(text || "")
+    .trim()
+    .split(/\n\s*\n/)
+    .map((chunk) => chunk.replace(/\s+/g, " ").trim())
+    .filter(Boolean);
+}
+
+function renderParagraphs(text) {
+  return splitParagraphs(text)
+    .map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`)
+    .join("");
+}
+
+function renderLinks(links) {
+  return `<div class="panel-links">${links
+    .filter((link) => Boolean(link.href))
+    .map((link) => `<a class="panel-link" href="${link.href}" target="_blank" rel="noreferrer">${escapeHtml(link.label)}</a>`)
+    .join("")}</div>`;
+}
+
+function renderAboutPanel() {
+  const about = profile.About;
+  return `
+    <section class="hero-card">
+      <h3 class="hero-name">${escapeHtml(about.name)}</h3>
+      <p class="hero-title">${escapeHtml(about.title)}</p>
+      <div class="meta-row">
+        <span class="meta-pill">${escapeHtml(about.location)}</span>
+      </div>
+    </section>
+    ${renderParagraphs(about.summary)}
+    ${renderLinks([
+      { label: "Email", href: about.email },
+      { label: "GitHub", href: about.github },
+      { label: "LinkedIn", href: about.linkedin }
+    ])}
+  `;
+}
+
+function renderSkillsPanel() {
+  const skillSections = Object.entries(profile.Skills).filter(([, value]) => Array.isArray(value));
+  return `
+    ${skillSections.map(([key, values]) => `
+      <section class="content-card">
+        <h4>${escapeHtml(skillKeyNames[key] || key.replace(/_/g, " "))}</h4>
+        <div class="chip-row">
+          ${values.map((value) => `<span class="chip">${escapeHtml(value)}</span>`).join("")}
+        </div>
+      </section>
+    `).join("")}
+    ${renderLinks([{ label: "GitHub Profile", href: profile.Skills.profileLink }])}
+  `;
+}
+
+function renderExperiencePanel() {
+  return profile.Experience.map((experience) => `
+    <article class="content-card">
+      <div class="card-head">
+        <h4>${escapeHtml(experience.role)} · ${escapeHtml(experience.company)}</h4>
+        <span class="meta-pill">${escapeHtml(experience.duration)}</span>
+      </div>
+      <p class="muted">${escapeHtml(experience.location)}</p>
+      ${experience.clients && experience.clients.length ? `
+        <div class="chip-row">
+          ${experience.clients.map((client) => `<span class="chip">Client: ${escapeHtml(client)}</span>`).join("")}
+        </div>
+      ` : ""}
+      <ul class="panel-list">
+        ${experience.responsibilities.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+      ${experience.technologies && experience.technologies.length ? `
+        <div class="chip-row">
+          ${experience.technologies.map((tech) => `<span class="chip">${escapeHtml(tech)}</span>`).join("")}
+        </div>
+      ` : ""}
+    </article>
+  `).join("");
+}
+
+function renderProjectsPanel() {
+  return profile.Projects.map((project) => `
+    <article class="content-card">
+      <div class="card-head">
+        <h4>${escapeHtml(project.name)}</h4>
+      </div>
+      ${renderParagraphs(project.description)}
+      <div class="chip-row">
+        ${project.techStack.map((tool) => `<span class="chip">${escapeHtml(tool)}</span>`).join("")}
+      </div>
+      ${project.link ? renderLinks([{ label: "Open Project", href: project.link }]) : ""}
+    </article>
+  `).join("");
+}
+
+function renderAchievementsPanel() {
+  return `
+    <section class="content-card">
+      <h4>Highlights</h4>
+      <ul class="panel-list">
+        ${profile.Achievements.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+      </ul>
+    </section>
+  `;
+}
+
+function renderContactPanel() {
+  const contact = profile.Contact;
+  return `
+    ${renderParagraphs(contact.message)}
+    ${renderLinks([
+      { label: "Email", href: contact.email },
+      { label: "LinkedIn", href: contact.linkedin },
+      { label: "GitHub", href: contact.github },
+      { label: "Instagram", href: contact.instagram },
+      { label: "Facebook", href: contact.facebook }
+    ])}
+  `;
+}
+
+const zoneRenderers = {
+  About: renderAboutPanel,
+  Skills: renderSkillsPanel,
+  Experience: renderExperiencePanel,
+  Projects: renderProjectsPanel,
+  Achievements: renderAchievementsPanel,
+  Contact: renderContactPanel
+};
 
 function setSakuraVisibility(zone) {
   document.body.classList.toggle("hide-sakura", zone === "About");
@@ -189,16 +462,15 @@ function setSakuraVisibility(zone) {
 
 function setPanel(zone) {
   if (zone === state.activeZone) return;
-  const info = profile[zone];
-  if (!info) return;
+  const renderZone = zoneRenderers[zone];
+  if (!renderZone) return;
 
   state.activeZone = zone;
   setSakuraVisibility(zone);
   playZoneSound();
   els.zoneName.textContent = zone;
   els.panelTitle.textContent = zone;
-  typeText(els.panelText, info.text);
-  els.panelLink.href = info.link;
+  els.panelText.innerHTML = renderZone();
   els.panel.classList.add("active");
 }
 
@@ -216,6 +488,7 @@ function updatePipes() {
   else {
     state.activeZone = "";
     setSakuraVisibility("");
+    els.zoneName.textContent = "Start";
   }
 }
 
