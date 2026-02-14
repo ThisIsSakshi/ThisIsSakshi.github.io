@@ -1,19 +1,19 @@
 const profile = {
   About: {
-    text: "Hi, I'm Sakshi. I build fast, thoughtful products with polished UI and clean engineering.",
-    link: "mailto:sakshi@example.com"
+    text: "Hi, this is Sakshi. I build fast, thoughtful products with polished UI and clean engineering.",
+    link: "mailto:thisissakshisharma@gmail.com"
   },
   Skills: {
     text: "Tech stack: JavaScript, React, Node.js, Python, SQL, Git, APIs, and product-minded problem solving.",
-    link: "https://github.com/your-username"
+    link: "https://github.com/ThisIsSakshi"
   },
   Projects: {
     text: "I ship web products, dashboards, and automation projects focused on performance and business impact.",
-    link: "https://github.com/your-username?tab=repositories"
+    link: "https://github.com/ThisIsSakshi?tab=repositories"
   },
   Contact: {
     text: "Open to roles and collaborations. Let's build something delightful and high-impact.",
-    link: "https://linkedin.com/in/your-linkedin"
+    link: "https://www.linkedin.com/in/its-sakshi/"
   }
 };
 
