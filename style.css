@@ -32,7 +32,7 @@ canvas#sakura {
   justify-content: center; /* Vertically center */
   align-items: center;     /* Horizontally center */
   text-align: center;
-  padding: 20px;
+  padding: 20px 20px 150px;
   box-sizing: border-box;
 }
 
@@ -52,23 +52,95 @@ canvas#sakura {
   margin-bottom: 20px;
 }
 
-/* Start Button Style */
-.start-btn {
-  font-size: 1.2rem;
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.hero-actions .start-btn,
+.hero-actions .resume-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 240px;
+  min-height: 54px;
   padding: 15px 30px;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  font-weight: 700;
+  white-space: nowrap;
   border-radius: 50px;
-  border: none;
-  background-color: #ffb6c1;
-  color: white;
-  /* ✨ No pointer cursor here, let your GIF shine! */
-  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+  text-decoration: none;
   transition: all 0.3s ease;
 }
 
-/* Hover Effect for Start Button */
+.start-btn {
+  border: none;
+  background-color: #ffb6c1;
+  color: white;
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.3);
+}
+
 .start-btn:hover {
-  background-color: #ff69b4; /* Hot pink when hovered */
-  transform: scale(1.05); /* Slightly enlarge on hover */
+  background-color: #ff69b4;
+  transform: scale(1.05);
+}
+
+.resume-btn {
+  border: none;
+  background: rgba(255, 255, 255, 0.88);
+  color: #cc2f80;
+  box-shadow: 0 8px 20px rgba(255, 105, 180, 0.2), inset 0 0 0 2px #ff8db8;
+}
+
+.resume-btn:hover {
+  background: #fff0f7;
+  transform: scale(1.05);
+}
+
+.quick-footer {
+  position: fixed;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 2;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 173, 211, 0.9);
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 30px rgba(234, 120, 177, 0.22);
+  padding: 10px 12px;
+}
+
+.quick-footer-note {
+  margin: 0 0 6px;
+  color: #894a75;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.quick-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.quick-footer-links a {
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid #ffc8e3;
+  background: #fff;
+  color: #9f2f6d;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.quick-footer-links a:hover {
+  background: #fff3fa;
 }
 
 /* Custom Cursor Styles */
@@ -164,4 +236,19 @@ a, button, input, .clickable {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
+}
+
+@media (max-width: 700px) {
+  .container {
+    padding-bottom: 190px;
+  }
+  .start-btn,
+  .resume-btn {
+    width: min(320px, 88vw);
+  }
+  .quick-footer {
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+  }
 }
