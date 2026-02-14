@@ -73,12 +73,17 @@ function typeText(el, text, speed = 17) {
   }, speed);
 }
 
+function setSakuraVisibility(zone) {
+  document.body.classList.toggle("hide-sakura", zone === "About");
+}
+
 function setPanel(zone) {
   if (zone === state.activeZone) return;
   const info = profile[zone];
   if (!info) return;
 
   state.activeZone = zone;
+  setSakuraVisibility(zone);
   els.zoneName.textContent = zone;
   els.panelTitle.textContent = zone;
   typeText(els.panelText, info.text);
@@ -97,7 +102,10 @@ function updatePipes() {
   });
 
   if (nearestZone) setPanel(nearestZone);
-  else state.activeZone = "";
+  else {
+    state.activeZone = "";
+    setSakuraVisibility("");
+  }
 }
 
 function updateCoins() {
