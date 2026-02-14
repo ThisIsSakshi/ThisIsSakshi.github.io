@@ -6,6 +6,9 @@ const profile = {
     email: "mailto:thisissakshisharma@gmail.com",
     github: "https://github.com/ThisIsSakshi",
     linkedin: "https://www.linkedin.com/in/its-sakshi/",
+    leetcode: "https://leetcode.com/u/Sakshi-Sharma/",
+    stackOverflow: "https://stackoverflow.com/users/8655468/sakshi-sharma",
+    hackerrank: "https://www.hackerrank.com/profile/ThisisSakshi",
     summary: `
       Hi, I'm Sakshi - a senior Python developer and technical mentor
       specializing in backend engineering, scalable system design, and
@@ -20,7 +23,6 @@ const profile = {
   Skills: {
     Languages: [
       "Python",
-      "JavaScript",
       "SQL",
       "HTML5",
       "CSS3"
@@ -362,7 +364,10 @@ function renderAboutPanel() {
     ${renderLinks([
       { label: "Email", href: about.email },
       { label: "GitHub", href: about.github },
-      { label: "LinkedIn", href: about.linkedin }
+      { label: "LinkedIn", href: about.linkedin },
+      { label: "LeetCode", href: about.leetcode },
+      { label: "Stack Overflow", href: about.stackOverflow },
+      { label: "HackerRank", href: about.hackerrank }
     ])}
   `;
 }
