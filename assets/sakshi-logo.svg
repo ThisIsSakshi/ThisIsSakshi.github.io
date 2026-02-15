@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Sakura Blossom Logo</title>
+  <desc id="desc">Pink sakura blossom with branch, buds, and small flowers.</desc>
+  <defs>
+    <radialGradient id="petalBig" cx="48%" cy="36%" r="78%">
+      <stop offset="0%" stop-color="#fff8fd"/>
+      <stop offset="52%" stop-color="#ffd9ec"/>
+      <stop offset="100%" stop-color="#ffb4d5"/>
+    </radialGradient>
+    <radialGradient id="petalSmall" cx="50%" cy="34%" r="78%">
+      <stop offset="0%" stop-color="#fff8fd"/>
+      <stop offset="58%" stop-color="#ffd6ea"/>
+      <stop offset="100%" stop-color="#ff9cc8"/>
+    </radialGradient>
+    <radialGradient id="flowerCore" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" stop-color="#ffe88f"/>
+      <stop offset="100%" stop-color="#ffc825"/>
+    </radialGradient>
+    <linearGradient id="branchGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#cc9f95"/>
+      <stop offset="100%" stop-color="#8d6667"/>
+    </linearGradient>
+    <linearGradient id="leafGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f0d3bd"/>
+      <stop offset="100%" stop-color="#c89a86"/>
+    </linearGradient>
+    <filter id="softGlow" x="-25%" y="-25%" width="150%" height="150%">
+      <feDropShadow dx="0" dy="0" stdDeviation="16" flood-color="#ffb7dd" flood-opacity="0.9"/>
+    </filter>
+
+    <path id="bigPetal" d="M0 0 C -34 -92 -98 -228 -30 -312 C -9 -337 9 -337 30 -312 C 98 -228 34 -92 0 0 Z"/>
+    <path id="smallPetal" d="M0 0 C -12 -28 -32 -68 -10 -92 C -3 -99 3 -99 10 -92 C 32 -68 12 -28 0 0 Z"/>
+  </defs>
+
+  <g filter="url(#softGlow)">
+    <g stroke="#ffffff" stroke-width="26" stroke-linejoin="round" stroke-linecap="round" fill="#ffeaf5">
+      <g transform="translate(402 478)">
+        <use href="#bigPetal" transform="rotate(-92)"/>
+        <use href="#bigPetal" transform="rotate(-20)"/>
+        <use href="#bigPetal" transform="rotate(52)"/>
+        <use href="#bigPetal" transform="rotate(124)"/>
+        <use href="#bigPetal" transform="rotate(196)"/>
+      </g>
+
+      <g transform="translate(760 304)">
+        <use href="#smallPetal" transform="rotate(-90)"/>
+        <use href="#smallPetal" transform="rotate(-18)"/>
+        <use href="#smallPetal" transform="rotate(54)"/>
+        <use href="#smallPetal" transform="rotate(126)"/>
+        <use href="#smallPetal" transform="rotate(198)"/>
+      </g>
+
+      <g transform="translate(812 530)">
+        <use href="#smallPetal" transform="rotate(-90)"/>
+        <use href="#smallPetal" transform="rotate(-18)"/>
+        <use href="#smallPetal" transform="rotate(54)"/>
+        <use href="#smallPetal" transform="rotate(126)"/>
+        <use href="#smallPetal" transform="rotate(198)"/>
+      </g>
+    </g>
+  </g>
+
+  <path d="M520 450 C 612 392 690 354 764 302" fill="none" stroke="url(#branchGrad)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M520 510 C 632 488 722 498 810 532" fill="none" stroke="url(#branchGrad)" stroke-width="16" stroke-linecap="round"/>
+  <path d="M562 468 C 624 444 666 406 708 366" fill="none" stroke="#b98c87" stroke-width="8" stroke-linecap="round"/>
+  <path d="M598 512 C 670 508 724 516 774 548" fill="none" stroke="#b98c87" stroke-width="8" stroke-linecap="round"/>
+
+  <path d="M130 632 C 184 558 246 548 318 560 C 272 622 210 654 130 632 Z" fill="url(#leafGrad)" stroke="#aa7f73" stroke-width="4"/>
+  <path d="M176 602 C 224 592 266 590 304 603" fill="none" stroke="#a47671" stroke-width="3" opacity="0.8"/>
+  <path d="M206 585 C 196 600 196 616 206 630" fill="none" stroke="#a47671" stroke-width="3" opacity="0.65"/>
+  <path d="M244 582 C 232 600 232 620 244 638" fill="none" stroke="#a47671" stroke-width="3" opacity="0.65"/>
+
+  <g transform="translate(402 478)">
+    <g fill="url(#petalBig)" stroke="#ff78b1" stroke-width="5" stroke-linejoin="round">
+      <use href="#bigPetal" transform="rotate(-92)"/>
+      <use href="#bigPetal" transform="rotate(-20)"/>
+      <use href="#bigPetal" transform="rotate(52)"/>
+      <use href="#bigPetal" transform="rotate(124)"/>
+      <use href="#bigPetal" transform="rotate(196)"/>
+    </g>
+    <circle r="30" fill="#f06298" opacity="0.35"/>
+  </g>
+
+  <g stroke="#f35f9f" stroke-width="6" stroke-linecap="round" fill="none">
+    <path d="M402 478 C 396 406 370 348 346 300"/>
+    <path d="M402 478 C 378 420 330 386 282 356"/>
+    <path d="M402 478 C 430 424 486 386 548 362"/>
+    <path d="M402 478 C 406 548 388 612 364 664"/>
+    <path d="M402 478 C 470 492 546 510 602 544"/>
+  </g>
+
+  <g fill="url(#flowerCore)" stroke="#f7b50a" stroke-width="2.2">
+    <ellipse cx="348" cy="300" rx="9" ry="13"/>
+    <ellipse cx="322" cy="332" rx="9" ry="13"/>
+    <ellipse cx="352" cy="364" rx="9" ry="13"/>
+    <ellipse cx="388" cy="326" rx="9" ry="13"/>
+    <ellipse cx="430" cy="364" rx="9" ry="13"/>
+    <ellipse cx="470" cy="340" rx="9" ry="13"/>
+    <ellipse cx="496" cy="372" rx="9" ry="13"/>
+  </g>
+
+  <g fill="#ff8fc2" opacity="0.92">
+    <ellipse cx="246" cy="420" rx="16" ry="11" transform="rotate(28 246 420)"/>
+    <ellipse cx="278" cy="506" rx="20" ry="12" transform="rotate(12 278 506)"/>
+    <ellipse cx="258" cy="672" rx="13" ry="10" transform="rotate(-12 258 672)"/>
+    <ellipse cx="292" cy="740" rx="13" ry="10" transform="rotate(-22 292 740)"/>
+    <ellipse cx="622" cy="716" rx="16" ry="11" transform="rotate(10 622 716)"/>
+    <ellipse cx="594" cy="592" rx="13" ry="10" transform="rotate(14 594 592)"/>
+    <ellipse cx="374" cy="236" rx="11" ry="9"/>
+    <ellipse cx="406" cy="228" rx="16" ry="12" transform="rotate(-24 406 228)"/>
+  </g>
+
+  <g fill="#fff6fb" opacity="0.65">
+    <circle cx="310" cy="336" r="7"/>
+    <circle cx="290" cy="392" r="6"/>
+    <circle cx="254" cy="470" r="5"/>
+    <circle cx="286" cy="530" r="9"/>
+    <circle cx="334" cy="566" r="5"/>
+    <circle cx="432" cy="544" r="7"/>
+    <circle cx="490" cy="510" r="6"/>
+    <circle cx="516" cy="438" r="8"/>
+    <circle cx="454" cy="392" r="5"/>
+    <circle cx="512" cy="382" r="6"/>
+    <circle cx="552" cy="424" r="8"/>
+    <circle cx="364" cy="606" r="9"/>
+    <circle cx="430" cy="644" r="6"/>
+  </g>
+
+  <g transform="translate(760 304)">
+    <g fill="url(#petalSmall)" stroke="#ff6aaa" stroke-width="4">
+      <use href="#smallPetal" transform="rotate(-90)"/>
+      <use href="#smallPetal" transform="rotate(-18)"/>
+      <use href="#smallPetal" transform="rotate(54)"/>
+      <use href="#smallPetal" transform="rotate(126)"/>
+      <use href="#smallPetal" transform="rotate(198)"/>
+    </g>
+    <circle r="14" fill="url(#flowerCore)" stroke="#f7b50a" stroke-width="2"/>
+  </g>
+
+  <g transform="translate(812 530)">
+    <g fill="url(#petalSmall)" stroke="#ff6aaa" stroke-width="4">
+      <use href="#smallPetal" transform="rotate(-90)"/>
+      <use href="#smallPetal" transform="rotate(-18)"/>
+      <use href="#smallPetal" transform="rotate(54)"/>
+      <use href="#smallPetal" transform="rotate(126)"/>
+      <use href="#smallPetal" transform="rotate(198)"/>
+    </g>
+    <circle r="14" fill="url(#flowerCore)" stroke="#f7b50a" stroke-width="2"/>
+  </g>
+
+  <g fill="#ff9ac8" stroke="#ff67aa" stroke-width="3.2">
+    <ellipse cx="700" cy="368" rx="18" ry="26" transform="rotate(34 700 368)"/>
+    <ellipse cx="678" cy="392" rx="12" ry="18" transform="rotate(20 678 392)"/>
+    <ellipse cx="724" cy="600" rx="16" ry="24" transform="rotate(-38 724 600)"/>
+    <ellipse cx="676" cy="562" rx="12" ry="18" transform="rotate(-18 676 562)"/>
+    <ellipse cx="736" cy="624" rx="24" ry="14" transform="rotate(24 736 624)" fill="#ffd4e9"/>
+  </g>
+</svg>
