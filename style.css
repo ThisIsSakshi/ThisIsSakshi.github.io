@@ -8,7 +8,6 @@ html, body {
   background: linear-gradient(120deg, #ffe0f0, #ffeaff); /* Default pastel gradient */
   color: #333;
   transition: background 2s ease-in-out; /* Smooth transition for background color change */
-  cursor: none; /* Hide default cursor globally */
 }
 
 /* Canvas Styles for Sakura Blossoms (if you have a sakura.js script) */
@@ -143,38 +142,6 @@ canvas#sakura {
   background: #fff3fa;
 }
 
-/* Custom Cursor Styles */
-.cursor-sparkle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 999999; /* ✨ bring to front */
-  width: 30px;
-  height: 30px;
-  background-image: url('assets/cursor-heart.gif'); /* Path to the custom GIF */
-  background-size: contain;
-  opacity: 0.9;
-  transition: opacity 0.3s ease;
-}
-
-
-/* CSS for Glitter Stars (Optional, if you use glitter effects) */
-.star {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: radial-gradient(circle, #ffc0cb, transparent); /* Light pink sparkles */
-  border-radius: 50%;
-  pointer-events: none;
-  animation: sparkle 0.6s ease-out forwards; /* Sparkle animation */
-}
-
-@keyframes sparkle {
-  0% { opacity: 1; transform: scale(1); }
-  100% { opacity: 0; transform: scale(2); }
-}
-
 /* For Smooth Background Change Based on Time of Day */
 body {
   transition: background 2s ease-in-out; /* Smooth transition for background change */
@@ -185,25 +152,6 @@ body, html {
   height: 100%;
   background-size: cover; /* Ensure the gradient fills the entire page */
 }
-
-a, button, input, .clickable {
-  cursor: none; /* Don't show system cursor on hover */
-}
-
-.cursor-sparkle {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none; /* super important to allow click-through */
-  z-index: 999999; /* ✨ bring to front */
-  width: 30px;
-  height: 30px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  opacity: 0.9;
-  transition: background-image 0.3s ease;
-}
-
 
 .model-buttons {
   margin-top: 20px;

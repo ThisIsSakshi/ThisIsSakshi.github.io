@@ -1,90 +1,13 @@
-// Create a function to handle the custom cursor (GIF)
-const cursor = document.createElement('div');
-cursor.classList.add('cursor-sparkle');
-document.body.appendChild(cursor);
-
-// Add a class for the sparkle effect on the cursor
-const style = document.createElement("style");
-style.textContent = `
-  .cursor-sparkle {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 10000;
-    width: 30px; /* Customize the size of the cursor */
-    height: 30px; /* Customize the size of the cursor */
-    background-image: url('assets/cursor-heart.gif'); /* Make sure the path to the GIF is correct */
-    background-size: contain;
-    opacity: 0.9;
-    transition: opacity 0.3s ease;
-  }
-`;
-document.head.appendChild(style);
-
-// Fun Game Start Button
 function startGame() {
   window.location.href = "game"; // ✨ navigate to new page
 }
 
-// Cute glitter cursor effect
-const trail = [];
-const MAX_TRAIL_STARS = 30;
-const STAR_MIN_INTERVAL_MS = 22;
-let pointerX = 0;
-let pointerY = 0;
-let pointerMoved = false;
-let lastStarTimestamp = 0;
-
-document.addEventListener("mousemove", (e) => {
-  pointerX = e.pageX;
-  pointerY = e.pageY;
-  pointerMoved = true;
-  cursor.style.left = `${pointerX - 15}px`;
-  cursor.style.top = `${pointerY - 15}px`;
-});
-
-function spawnStar(x, y) {
-  const star = document.createElement("div");
-  star.className = "star";
-  star.style.left = `${x}px`;
-  star.style.top = `${y}px`;
-  document.body.appendChild(star);
-  trail.push(star);
-  if (trail.length > MAX_TRAIL_STARS) {
-    const old = trail.shift();
-    old.remove();
-  }
+if (typeof window.setupSparkleCursor === "function") {
+  window.setupSparkleCursor({
+    heartCursor: "assets/cursor-heart.gif",
+    pointerCursor: "assets/pointer.png"
+  });
 }
-
-function animateTrail(timestamp) {
-  if (pointerMoved && timestamp - lastStarTimestamp >= STAR_MIN_INTERVAL_MS) {
-    spawnStar(pointerX, pointerY);
-    pointerMoved = false;
-    lastStarTimestamp = timestamp;
-  }
-  requestAnimationFrame(animateTrail);
-}
-
-requestAnimationFrame(animateTrail);
-
-const styleStars = document.createElement("style");
-styleStars.textContent = `
-  .star {
-    position: absolute;
-    width: 6px;
-    height: 6px;
-    background: radial-gradient(circle, #ffc0cb, transparent);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: sparkle 0.6s ease-out forwards;
-  }
-  @keyframes sparkle {
-    0% { opacity: 1; transform: scale(1); }
-    100% { opacity: 0; transform: scale(2); }
-  }
-`;
-document.head.appendChild(styleStars);
 
 // Function to update background color based on time of day
 function updateBackgroundByTime() {
@@ -110,20 +33,6 @@ function updateBackgroundByTime() {
 
 // Call it when the page loads
 updateBackgroundByTime();
-
-// Change cursor when hovering over clickable elements
-const clickableElements = document.querySelectorAll('button, a, input, textarea, select, .clickable');
-
-clickableElements.forEach(el => {
-  el.addEventListener('mouseenter', () => {
-    cursor.style.backgroundImage = "url('assets/pointer.png')"; // Hover cursor
-  });
-
-  el.addEventListener('mouseleave', () => {
-    cursor.style.backgroundImage = "url('assets/cursor-heart.gif')"; // Default heart cursor
-  });
-});
-
 
 // Initialize model
 let currentModel = 'tororo';
