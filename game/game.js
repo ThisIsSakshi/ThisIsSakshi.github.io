@@ -31,6 +31,8 @@ const profile = {
     Frameworks: [
       "Flask",
       "Django",
+      "Numpy",
+      "Pandas",
       "Flask-WTF",
       "Bulma CSS"
     ],
@@ -50,7 +52,12 @@ const profile = {
       "GitHub",
       "Linux"
     ],
-
+    Technologies_and_Tools: [
+      "Git",
+      "Jira",
+      "Heroku",
+      "Jenkins"
+    ],
     Concepts: [
       "REST API Design",
       "Relational Database Design",
@@ -90,7 +97,7 @@ const profile = {
       company: "UST Global",
       role: "Lead Software Developer",
       duration: "November 2018 - June 2024",
-      location: "India",
+      location: "Bangalore, India",
       clients: ["NetApp", "Major Insurance Client", "Internal Finance & HR"],
       responsibilities: [
         "Led backend development and architectural decisions across multiple enterprise solutions",
