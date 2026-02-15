@@ -249,6 +249,12 @@ const audio = {
 
 const audioUnlockEvents = ["pointerdown", "touchstart", "keydown"];
 let audioUnlockHandler = null;
+const AUDIO_RESUME_TIMEOUT_MS = 600;
+const AUDIO_RESUME_ATTEMPTS = 2;
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 function removeAudioUnlockListeners() {
   if (!audioUnlockHandler) return;
@@ -273,6 +279,15 @@ function initAudio() {
   audio.master = audio.ctx.createGain();
   audio.master.gain.value = 0.28;
   audio.master.connect(audio.ctx.destination);
+  audio.ctx.addEventListener("statechange", () => {
+    audio.unlocked = audio.ctx.state === "running";
+    if (audio.unlocked) {
+      primeAudioEngine();
+      removeAudioUnlockListeners();
+      audioUnlockHandler = null;
+    }
+    updateSoundButton();
+  });
 }
 
 function primeAudioEngine() {
@@ -294,6 +309,22 @@ function primeAudioEngine() {
   audio.primed = true;
 }
 
+async function resumeAudioContext() {
+  if (!audio.ctx) return false;
+  if (audio.ctx.state === "running") return true;
+
+  try {
+    await Promise.race([
+      audio.ctx.resume(),
+      wait(AUDIO_RESUME_TIMEOUT_MS)
+    ]);
+  } catch (_) {
+    // Ignore and allow retry attempts.
+  }
+
+  return audio.ctx.state === "running";
+}
+
 async function unlockAudio() {
   initAudio();
   if (!audio.ctx) {
@@ -309,20 +340,11 @@ async function unlockAudio() {
   audio.loading = true;
   updateSoundButton();
   audio.unlockPromise = (async () => {
-    const maxAttempts = 3;
-    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+    for (let attempt = 0; attempt < AUDIO_RESUME_ATTEMPTS; attempt += 1) {
       if (!audio.ctx) return false;
-
-      if (audio.ctx.state !== "running") {
-        try {
-          await audio.ctx.resume();
-        } catch (_) {
-          // Keep trying while gesture context is still active.
-        }
-      }
-
-      if (audio.ctx.state === "running") break;
-      await new Promise((resolve) => setTimeout(resolve, 40));
+      const running = await resumeAudioContext();
+      if (running) break;
+      await wait(70);
     }
 
     audio.unlocked = audio.ctx.state === "running";
@@ -407,18 +429,13 @@ function updateSoundButton() {
     return;
   }
 
-  if (!audio.unlocked) {
-    els.soundBtn.textContent = "🔉 Enable Sound";
-    els.soundBtn.setAttribute("aria-pressed", "false");
-    return;
-  }
-
   els.soundBtn.textContent = state.soundEnabled ? "🔊 Sound" : "🔈 Muted";
   els.soundBtn.setAttribute("aria-pressed", String(!state.soundEnabled));
 }
 
 function setupSoundControls() {
   audio.supported = Boolean(window.AudioContext || window.webkitAudioContext);
+  initAudio();
   updateSoundButton();
   if (!audio.supported) return;
 
@@ -440,17 +457,16 @@ function setupSoundControls() {
 
     const wasUnlocked = audio.unlocked;
     const unlocked = await unlockAudio();
-    if (!unlocked) return;
-
-    removeAudioUnlockListeners();
-    audioUnlockHandler = null;
-
-    if (!wasUnlocked) {
+    if (!wasUnlocked && unlocked) {
       state.soundEnabled = true;
+      removeAudioUnlockListeners();
+      audioUnlockHandler = null;
       updateSoundButton();
       playTone({ freq: 620, glideTo: 860, type: "triangle", duration: 0.08, gain: 0.1 });
       return;
     }
+
+    if (!unlocked) return;
 
     state.soundEnabled = !state.soundEnabled;
     updateSoundButton();
