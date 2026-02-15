@@ -226,6 +226,72 @@ const state = {
   soundEnabled: true
 };
 
+function setupCustomCursor() {
+  if (!window.matchMedia || !window.matchMedia("(pointer: fine)").matches) {
+    return;
+  }
+
+  const cursor = document.createElement("div");
+  cursor.className = "cursor-sparkle";
+  document.body.appendChild(cursor);
+
+  const trail = [];
+  const maxTrailStars = 30;
+  const starMinIntervalMs = 22;
+  let pointerX = 0;
+  let pointerY = 0;
+  let pointerMoved = false;
+  let lastStarTimestamp = 0;
+
+  document.addEventListener("mousemove", (event) => {
+    if (!document.body.classList.contains("custom-cursor-active")) {
+      document.body.classList.add("custom-cursor-active");
+    }
+
+    pointerX = event.pageX;
+    pointerY = event.pageY;
+    pointerMoved = true;
+    cursor.style.left = `${pointerX - 15}px`;
+    cursor.style.top = `${pointerY - 15}px`;
+  });
+
+  const spawnStar = (x, y) => {
+    const star = document.createElement("div");
+    star.className = "cursor-trail-star";
+    star.style.left = `${x}px`;
+    star.style.top = `${y}px`;
+    document.body.appendChild(star);
+    trail.push(star);
+
+    if (trail.length > maxTrailStars) {
+      const oldStar = trail.shift();
+      oldStar.remove();
+    }
+  };
+
+  const animateTrail = (timestamp) => {
+    if (pointerMoved && timestamp - lastStarTimestamp >= starMinIntervalMs) {
+      spawnStar(pointerX, pointerY);
+      pointerMoved = false;
+      lastStarTimestamp = timestamp;
+    }
+
+    requestAnimationFrame(animateTrail);
+  };
+
+  requestAnimationFrame(animateTrail);
+
+  const clickableElements = document.querySelectorAll("button, a, input, textarea, select, .clickable");
+  clickableElements.forEach((element) => {
+    element.addEventListener("mouseenter", () => {
+      cursor.style.backgroundImage = "url('../assets/pointer.png')";
+    });
+    element.addEventListener("mouseleave", () => {
+      cursor.style.backgroundImage = "url('../assets/cursor-heart.gif')";
+    });
+  });
+}
+
 const audio = {
   ctx: null,
   master: null,
@@ -659,6 +725,7 @@ bindHold(els.leftBtn, "arrowleft");
 bindHold(els.rightBtn, "arrowright");
 bindHold(els.jumpBtn, " ");
 
+setupCustomCursor();
 setupSoundControls();
 
 els.viewport.addEventListener("touchmove", (e) => e.preventDefault(), { passive: false });
