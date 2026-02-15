@@ -216,7 +216,7 @@ function initAudio() {
 
   audio.ctx = new AudioCtx();
   audio.master = audio.ctx.createGain();
-  audio.master.gain.value = 0.11;
+  audio.master.gain.value = 0.2;
   audio.master.connect(audio.ctx.destination);
 }
 
@@ -267,17 +267,17 @@ function playTone({
 }
 
 function playJumpSound() {
-  playTone({ freq: 260, glideTo: 520, type: "square", duration: 0.1, gain: 0.08 });
+  playTone({ freq: 260, glideTo: 520, type: "square", duration: 0.1, gain: 0.11 });
 }
 
 function playCoinSound() {
-  playTone({ freq: 880, glideTo: 1240, type: "triangle", duration: 0.08, gain: 0.1 });
-  playTone({ freq: 1320, glideTo: 1580, type: "triangle", duration: 0.08, gain: 0.08, offset: 0.05 });
+  playTone({ freq: 880, glideTo: 1240, type: "triangle", duration: 0.08, gain: 0.14 });
+  playTone({ freq: 1320, glideTo: 1580, type: "triangle", duration: 0.08, gain: 0.11, offset: 0.05 });
 }
 
 function playZoneSound() {
-  playTone({ freq: 510, glideTo: 680, type: "sine", duration: 0.09, gain: 0.08 });
-  playTone({ freq: 740, glideTo: 960, type: "sine", duration: 0.1, gain: 0.07, offset: 0.06 });
+  playTone({ freq: 510, glideTo: 680, type: "sine", duration: 0.09, gain: 0.11 });
+  playTone({ freq: 740, glideTo: 960, type: "sine", duration: 0.1, gain: 0.09, offset: 0.06 });
 }
 
 function updateSoundButton() {
@@ -306,7 +306,7 @@ function setupSoundControls() {
     state.soundEnabled = !state.soundEnabled;
     updateSoundButton();
     if (state.soundEnabled) {
-      playTone({ freq: 620, glideTo: 860, type: "triangle", duration: 0.08, gain: 0.07 });
+      playTone({ freq: 620, glideTo: 860, type: "triangle", duration: 0.08, gain: 0.09 });
     }
   });
 }
