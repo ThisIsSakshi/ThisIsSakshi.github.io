@@ -9,6 +9,7 @@
   --ground1:#84cc16;
   --ground2:#6aa80f;
   --dark:#2c1830;
+  --bottom-ui-gap:max(16px, env(safe-area-inset-bottom));
 }
 
 *{box-sizing:border-box}
@@ -106,7 +107,7 @@ body.hide-sakura #sakura{opacity:0}
   z-index:1;
   max-width:1140px;
   margin:0 auto;
-  padding:14px;
+  padding:14px 14px calc(10px + var(--bottom-ui-gap));
 }
 .game-shell{
   background:#fff;
@@ -313,8 +314,8 @@ body.hide-sakura #sakura{opacity:0}
   transform:translateY(8px);
   opacity:.25;
   transition:.4s ease;
-  max-height:330px;
-  overflow:auto;
+  max-height:none;
+  overflow:visible;
 }
 .panel.active{
   transform:translateY(0);
@@ -414,9 +415,15 @@ body.hide-sakura #sakura{opacity:0}
   .stats{font-size:15px}
   .hud-tools{gap:6px}
   .sound-btn{font-size:12px;padding:7px 10px}
-  .viewport{height:340px}
-  .panel{max-height:380px}
+  .layout{padding-bottom:calc(12px + var(--bottom-ui-gap))}
+  .viewport{height:min(340px, 48dvh)}
+  .panel{max-height:none;overflow:visible}
   .hero-name{font-size:22px}
   .content-card h4{font-size:18px}
   .panel-body p{font-size:16px}
+}
+
+@media (max-height:760px){
+  .viewport{height:min(320px, 42dvh)}
+  .panel{max-height:none}
 }
