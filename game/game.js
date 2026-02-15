@@ -309,12 +309,20 @@ async function unlockAudio() {
   audio.loading = true;
   updateSoundButton();
   audio.unlockPromise = (async () => {
-    if (audio.ctx.state === "suspended") {
-      try {
-        await audio.ctx.resume();
-      } catch (_) {
-        return false;
+    const maxAttempts = 3;
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      if (!audio.ctx) return false;
+
+      if (audio.ctx.state !== "running") {
+        try {
+          await audio.ctx.resume();
+        } catch (_) {
+          // Keep trying while gesture context is still active.
+        }
       }
+
+      if (audio.ctx.state === "running") break;
+      await new Promise((resolve) => setTimeout(resolve, 40));
     }
 
     audio.unlocked = audio.ctx.state === "running";
@@ -389,13 +397,18 @@ function updateSoundButton() {
     return;
   }
 
-  const loadingState = audio.loading || !audio.unlocked;
-  els.soundBtn.classList.toggle("is-loading", loadingState);
-  els.soundBtn.disabled = false;
-  els.soundBtn.setAttribute("aria-busy", String(loadingState));
+  els.soundBtn.classList.toggle("is-loading", audio.loading);
+  els.soundBtn.disabled = audio.loading;
+  els.soundBtn.setAttribute("aria-busy", String(audio.loading));
 
-  if (loadingState) {
+  if (audio.loading) {
     els.soundBtn.textContent = "⏳ Sound Loading";
+    els.soundBtn.setAttribute("aria-pressed", "false");
+    return;
+  }
+
+  if (!audio.unlocked) {
+    els.soundBtn.textContent = "🔉 Enable Sound";
     els.soundBtn.setAttribute("aria-pressed", "false");
     return;
   }
@@ -405,7 +418,7 @@ function updateSoundButton() {
 }
 
 function setupSoundControls() {
-  initAudio();
+  audio.supported = Boolean(window.AudioContext || window.webkitAudioContext);
   updateSoundButton();
   if (!audio.supported) return;
 
@@ -423,7 +436,7 @@ function setupSoundControls() {
 
   if (!els.soundBtn) return;
   els.soundBtn.addEventListener("click", async () => {
-    if (!audio.supported) return;
+    if (!audio.supported || audio.loading) return;
 
     const wasUnlocked = audio.unlocked;
     const unlocked = await unlockAudio();
