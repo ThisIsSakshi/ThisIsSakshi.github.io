@@ -153,10 +153,26 @@ const profile = {
   ],
 
   Achievements: [
+    {
+      title: "UStar Recognition Award",
+      date: "May, 2022",
+      detail: "UST CodeGround"
+    },
+    {
+      title: "Competition 3.0 Finalist",
+      date: "Jan, 2022",
+      detail: "UST CodeGround"
+    },
+    {
+      title: "Competition 2.0 Finalist",
+      date: "Oct, 2020",
+      detail: "UST CodeGround"
+    },
     "Designed full relational systems from scratch",
     "Built dynamic DB driven form engines",
     "Mentored developers on production grade backend practices",
-    "Optimized database performance using execution-level control"
+    "Optimized database performance using execution-level control",
+    
   ],
 
   Contact: {
@@ -435,11 +451,25 @@ function renderProjectsPanel() {
 }
 
 function renderAchievementsPanel() {
+  const achievementRows = profile.Achievements.map((item) => {
+    if (typeof item === "string") {
+      return `<li>${escapeHtml(item)}</li>`;
+    }
+
+    return `
+      <li>
+        <strong>${escapeHtml(item.title)}</strong>
+        <span class="ach-date">${escapeHtml(item.date)}</span>
+        ${item.detail ? `<div class="ach-detail">${escapeHtml(item.detail)}</div>` : ""}
+      </li>
+    `;
+  }).join("");
+
   return `
     <section class="content-card">
       <h4>Highlights</h4>
       <ul class="panel-list">
-        ${profile.Achievements.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+        ${achievementRows}
       </ul>
     </section>
   `;

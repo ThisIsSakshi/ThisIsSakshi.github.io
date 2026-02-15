@@ -374,6 +374,19 @@ body.hide-sakura #sakura{opacity:0}
   font-weight:700;
 }
 .panel-list{margin:0;padding-left:19px;display:grid;gap:6px;font-size:16px;line-height:1.35}
+.panel-list strong{display:inline-block}
+.ach-date{
+  margin-left:8px;
+  display:inline-block;
+  font-size:13px;
+  font-weight:700;
+  color:#8c74b3;
+}
+.ach-detail{
+  margin-top:2px;
+  font-size:13px;
+  color:#8e5fa1;
+}
 .panel-links{display:flex;flex-wrap:wrap;gap:8px}
 .panel-link{
   display:inline-block;
