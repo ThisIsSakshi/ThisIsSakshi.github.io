@@ -241,7 +241,10 @@ const audio = {
   ctx: null,
   master: null,
   unlocked: false,
-  primed: false
+  primed: false,
+  loading: false,
+  supported: true,
+  unlockPromise: null
 };
 
 const audioUnlockEvents = ["pointerdown", "touchstart", "keydown"];
@@ -257,7 +260,10 @@ function removeAudioUnlockListeners() {
 function initAudio() {
   if (audio.ctx) return;
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
-  if (!AudioCtx) return;
+  if (!AudioCtx) {
+    audio.supported = false;
+    return;
+  }
 
   try {
     audio.ctx = new AudioCtx({ latencyHint: "interactive" });
@@ -290,21 +296,41 @@ function primeAudioEngine() {
 
 async function unlockAudio() {
   initAudio();
-  if (!audio.ctx) return false;
+  if (!audio.ctx) {
+    audio.supported = false;
+    updateSoundButton();
+    return false;
+  }
 
-  if (audio.ctx.state === "suspended") {
-    try {
-      await audio.ctx.resume();
-    } catch (_) {
-      return false;
+  if (audio.unlockPromise) {
+    return audio.unlockPromise;
+  }
+
+  audio.loading = true;
+  updateSoundButton();
+  audio.unlockPromise = (async () => {
+    if (audio.ctx.state === "suspended") {
+      try {
+        await audio.ctx.resume();
+      } catch (_) {
+        return false;
+      }
     }
-  }
 
-  audio.unlocked = audio.ctx.state === "running";
-  if (audio.unlocked) {
-    primeAudioEngine();
+    audio.unlocked = audio.ctx.state === "running";
+    if (audio.unlocked) {
+      primeAudioEngine();
+    }
+    return audio.unlocked;
+  })();
+
+  try {
+    return await audio.unlockPromise;
+  } finally {
+    audio.loading = false;
+    audio.unlockPromise = null;
+    updateSoundButton();
   }
-  return audio.unlocked;
 }
 
 function playTone({
@@ -354,6 +380,26 @@ function playZoneSound() {
 
 function updateSoundButton() {
   if (!els.soundBtn) return;
+  if (!audio.supported) {
+    els.soundBtn.textContent = "🔇 No Sound";
+    els.soundBtn.classList.remove("is-loading");
+    els.soundBtn.disabled = true;
+    els.soundBtn.setAttribute("aria-pressed", "true");
+    els.soundBtn.setAttribute("aria-busy", "false");
+    return;
+  }
+
+  const loadingState = audio.loading || !audio.unlocked;
+  els.soundBtn.classList.toggle("is-loading", loadingState);
+  els.soundBtn.disabled = false;
+  els.soundBtn.setAttribute("aria-busy", String(loadingState));
+
+  if (loadingState) {
+    els.soundBtn.textContent = "⏳ Sound Loading";
+    els.soundBtn.setAttribute("aria-pressed", "false");
+    return;
+  }
+
   els.soundBtn.textContent = state.soundEnabled ? "🔊 Sound" : "🔈 Muted";
   els.soundBtn.setAttribute("aria-pressed", String(!state.soundEnabled));
 }
@@ -361,6 +407,7 @@ function updateSoundButton() {
 function setupSoundControls() {
   initAudio();
   updateSoundButton();
+  if (!audio.supported) return;
 
   audioUnlockHandler = async () => {
     const unlocked = await unlockAudio();
@@ -376,9 +423,14 @@ function setupSoundControls() {
 
   if (!els.soundBtn) return;
   els.soundBtn.addEventListener("click", async () => {
+    if (!audio.supported) return;
+
     const wasUnlocked = audio.unlocked;
     const unlocked = await unlockAudio();
     if (!unlocked) return;
+
+    removeAudioUnlockListeners();
+    audioUnlockHandler = null;
 
     if (!wasUnlocked) {
       state.soundEnabled = true;

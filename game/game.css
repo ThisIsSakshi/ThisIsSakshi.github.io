@@ -98,6 +98,12 @@ body.hide-sakura #sakura{opacity:0}
   cursor:pointer;
   white-space:nowrap;
 }
+.sound-btn.is-loading{
+  color:#fdfbff;
+  background:linear-gradient(135deg,#b9acc9,#a898bc);
+  box-shadow:0 6px 12px #7c6f8d45;
+  cursor:progress;
+}
 .sound-btn[aria-pressed="true"]{
   background:linear-gradient(135deg,#b4a8bf,#9988a8);
 }
