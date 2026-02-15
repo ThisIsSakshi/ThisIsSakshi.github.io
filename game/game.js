@@ -10,11 +10,11 @@ const profile = {
     stackOverflow: "https://stackoverflow.com/users/8655468/sakshi-sharma",
     hackerrank: "https://www.hackerrank.com/profile/ThisisSakshi",
     summary: `
-      Hi, I'm Sakshi - a senior Python developer and technical mentor
+      Hi, I'm Sakshi, a senior Python developer and technical mentor
       specializing in backend engineering, scalable system design, and
-      workflow-driven applications.
+      workflow driven applications.
 
-      I build production-grade systems using Flask, SQLAlchemy 2.0,
+      I build production grade systems using Flask, SQLAlchemy 2.0,
       PostgreSQL, and modern frontend integrations. I focus on clean
       architecture, performance optimization, and maintainable code.
     `
@@ -73,9 +73,9 @@ const profile = {
       location: "Remote",
       clients: ["BT"],
       responsibilities: [
-        "Designed and developed internal guest, asset, and logistics management systems for large-scale event operations",
+        "Designed and developed internal guest, asset, and logistics management systems for large scale event operations",
         "Implemented guest check-in workflows and attendance tracking modules",
-        "Built T-shirt allocation and hotel night management features",
+        "Built Tshirt allocation and hotel night management features",
         "Designed relational database schema using SQLAlchemy 2.0 standards",
         "Ensured scalable backend architecture using Flask"
       ],
@@ -98,8 +98,8 @@ const profile = {
         "Optimized data retrieval using parallel processing techniques from platform REST APIs",
         "Built automated insurance validation systems for enterprise clients",
         "Developed internal automation and ticketing platforms for HR and financial operations",
-        "Implemented performance-focused backend services using Flask and Python-based microservices",
-        "Collaborated with cross-functional teams for production deployments and CI/CD pipelines"
+        "Implemented performance focused backend services using Flask and Python based microservices",
+        "Collaborated with cross functional teams for production deployments and CI/CD pipelines"
       ],
       technologies: [
         "Python",
@@ -118,7 +118,7 @@ const profile = {
     {
       name: "Budgio",
       description: `
-        A full-scale budget management and approval workflow system.
+        A full scale budget management and approval workflow system.
         Features request handling, multi-level approvals, dynamic
         request types, asset tagging, notifications, and audit trails.
       `,
@@ -128,7 +128,7 @@ const profile = {
     {
       name: "Snoopcon",
       description: `
-        Guest management and event tracking system with T-shirt
+        Guest management and event tracking system with Tshirt
         mapping, hotel nights tracking, and relational data modeling.
       `,
       techStack: ["Flask", "PostgreSQL", "Flask-WTF"],
@@ -147,8 +147,8 @@ const profile = {
 
   Achievements: [
     "Designed full relational systems from scratch",
-    "Built dynamic DB-driven form engines",
-    "Mentored developers on production-grade backend practices",
+    "Built dynamic DB driven form engines",
+    "Mentored developers on production grade backend practices",
     "Optimized database performance using execution-level control"
   ],
 
