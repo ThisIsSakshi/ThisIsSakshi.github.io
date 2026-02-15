@@ -240,7 +240,8 @@ function setupSharedCursor() {
 const audio = {
   ctx: null,
   master: null,
-  unlocked: false
+  unlocked: false,
+  primed: false
 };
 
 const audioUnlockEvents = ["pointerdown", "touchstart", "keydown"];
@@ -258,10 +259,33 @@ function initAudio() {
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
   if (!AudioCtx) return;
 
-  audio.ctx = new AudioCtx();
+  try {
+    audio.ctx = new AudioCtx({ latencyHint: "interactive" });
+  } catch (_) {
+    audio.ctx = new AudioCtx();
+  }
   audio.master = audio.ctx.createGain();
   audio.master.gain.value = 0.28;
   audio.master.connect(audio.ctx.destination);
+}
+
+function primeAudioEngine() {
+  if (!audio.ctx || !audio.master || audio.primed) return;
+
+  const now = audio.ctx.currentTime;
+  const osc = audio.ctx.createOscillator();
+  const amp = audio.ctx.createGain();
+
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(440, now);
+  amp.gain.setValueAtTime(0.00001, now);
+  amp.gain.exponentialRampToValueAtTime(0.00001, now + 0.02);
+
+  osc.connect(amp);
+  amp.connect(audio.master);
+  osc.start(now);
+  osc.stop(now + 0.02);
+  audio.primed = true;
 }
 
 async function unlockAudio() {
@@ -277,6 +301,9 @@ async function unlockAudio() {
   }
 
   audio.unlocked = audio.ctx.state === "running";
+  if (audio.unlocked) {
+    primeAudioEngine();
+  }
   return audio.unlocked;
 }
 
@@ -291,7 +318,7 @@ function playTone({
   if (!state.soundEnabled || !audio.unlocked || !audio.ctx || !audio.master) return;
   if (audio.ctx.state !== "running") return;
 
-  const now = audio.ctx.currentTime + offset;
+  const now = audio.ctx.currentTime + 0.005 + offset;
   const osc = audio.ctx.createOscillator();
   const amp = audio.ctx.createGain();
 
@@ -332,6 +359,7 @@ function updateSoundButton() {
 }
 
 function setupSoundControls() {
+  initAudio();
   updateSoundButton();
 
   audioUnlockHandler = async () => {
