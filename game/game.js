@@ -243,6 +243,16 @@ const audio = {
   unlocked: false
 };
 
+const audioUnlockEvents = ["pointerdown", "touchstart", "keydown"];
+let audioUnlockHandler = null;
+
+function removeAudioUnlockListeners() {
+  if (!audioUnlockHandler) return;
+  audioUnlockEvents.forEach((eventName) => {
+    window.removeEventListener(eventName, audioUnlockHandler, true);
+  });
+}
+
 function initAudio() {
   if (audio.ctx) return;
   const AudioCtx = window.AudioContext || window.webkitAudioContext;
@@ -250,7 +260,7 @@ function initAudio() {
 
   audio.ctx = new AudioCtx();
   audio.master = audio.ctx.createGain();
-  audio.master.gain.value = 0.2;
+  audio.master.gain.value = 0.28;
   audio.master.connect(audio.ctx.destination);
 }
 
@@ -279,6 +289,7 @@ function playTone({
   offset = 0
 } = {}) {
   if (!state.soundEnabled || !audio.unlocked || !audio.ctx || !audio.master) return;
+  if (audio.ctx.state !== "running") return;
 
   const now = audio.ctx.currentTime + offset;
   const osc = audio.ctx.createOscillator();
@@ -323,24 +334,35 @@ function updateSoundButton() {
 function setupSoundControls() {
   updateSoundButton();
 
-  const unlockOnFirstGesture = () => {
-    unlockAudio();
-    window.removeEventListener("pointerdown", unlockOnFirstGesture);
-    window.removeEventListener("keydown", unlockOnFirstGesture);
-    window.removeEventListener("touchstart", unlockOnFirstGesture);
+  audioUnlockHandler = async () => {
+    const unlocked = await unlockAudio();
+    if (!unlocked) return;
+
+    removeAudioUnlockListeners();
+    audioUnlockHandler = null;
   };
 
-  window.addEventListener("pointerdown", unlockOnFirstGesture, { passive: true });
-  window.addEventListener("keydown", unlockOnFirstGesture);
-  window.addEventListener("touchstart", unlockOnFirstGesture, { passive: true });
+  window.addEventListener("pointerdown", audioUnlockHandler, { passive: true, capture: true });
+  window.addEventListener("touchstart", audioUnlockHandler, { passive: true, capture: true });
+  window.addEventListener("keydown", audioUnlockHandler, { capture: true });
 
   if (!els.soundBtn) return;
   els.soundBtn.addEventListener("click", async () => {
-    await unlockAudio();
+    const wasUnlocked = audio.unlocked;
+    const unlocked = await unlockAudio();
+    if (!unlocked) return;
+
+    if (!wasUnlocked) {
+      state.soundEnabled = true;
+      updateSoundButton();
+      playTone({ freq: 620, glideTo: 860, type: "triangle", duration: 0.08, gain: 0.1 });
+      return;
+    }
+
     state.soundEnabled = !state.soundEnabled;
     updateSoundButton();
     if (state.soundEnabled) {
-      playTone({ freq: 620, glideTo: 860, type: "triangle", duration: 0.08, gain: 0.09 });
+      playTone({ freq: 620, glideTo: 860, type: "triangle", duration: 0.08, gain: 0.1 });
     }
   });
 }
@@ -651,7 +673,13 @@ function gameLoop() {
 }
 
 function bindHold(button, key) {
-  const press = (e) => { e.preventDefault(); state.keys.add(key); };
+  const press = (e) => {
+    e.preventDefault();
+    if (!audio.unlocked) {
+      unlockAudio();
+    }
+    state.keys.add(key);
+  };
   const release = (e) => { e.preventDefault(); state.keys.delete(key); };
 
   button.addEventListener("touchstart", press, { passive: false });
