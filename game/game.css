@@ -476,6 +476,9 @@ body.hide-sakura #sakura{opacity:0}
 }
 
 .panel{
+  position:relative;
+  z-index:3;
+  pointer-events:auto;
   margin-top:14px;
   border:3px solid #ffd7eb;
   border-radius:18px;
@@ -561,6 +564,10 @@ body.hide-sakura #sakura{opacity:0}
 }
 .panel-links{display:flex;flex-wrap:wrap;gap:8px}
 .panel-link{
+  position:relative;
+  z-index:1;
+  pointer-events:auto;
+  cursor:pointer;
   display:inline-block;
   text-decoration:none;
   padding:8px 12px;

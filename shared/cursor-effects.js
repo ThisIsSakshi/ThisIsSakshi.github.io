@@ -36,13 +36,33 @@
     let pointerMoved = false;
     let lastStarTimestamp = 0;
     let rafId = 0;
+    let isPointerMode = false;
+
+    const setPointerMode = (active) => {
+      if (isPointerMode === active) return;
+      isPointerMode = active;
+      cursor.style.backgroundImage = `url("${active ? cfg.pointerCursor : cfg.heartCursor}")`;
+    };
 
     const onMouseMove = (event) => {
-      pointerX = event.pageX;
-      pointerY = event.pageY;
+      pointerX = event.clientX;
+      pointerY = event.clientY;
       pointerMoved = true;
       cursor.style.left = `${pointerX - cfg.cursorSize / 2}px`;
       cursor.style.top = `${pointerY - cfg.cursorSize / 2}px`;
+      if (!(event.target instanceof Element)) {
+        setPointerMode(false);
+        return;
+      }
+
+      // Resolve hover target using viewport coords because cursor is fixed-position.
+      const hovered = document.elementFromPoint(event.clientX, event.clientY);
+      const clickable = hovered instanceof Element ? hovered.closest(cfg.clickableSelector) : null;
+      setPointerMode(Boolean(clickable));
+    };
+
+    const onMouseLeave = () => {
+      setPointerMode(false);
     };
 
     const spawnStar = (x, y) => {
@@ -71,31 +91,15 @@
       rafId = window.requestAnimationFrame(animateTrail);
     };
 
-    const onMouseOver = (event) => {
-      if (!(event.target instanceof Element)) return;
-      const clickable = event.target.closest(cfg.clickableSelector);
-      if (!clickable) return;
-      cursor.style.backgroundImage = `url("${cfg.pointerCursor}")`;
-    };
-
-    const onMouseOut = (event) => {
-      if (!(event.target instanceof Element)) return;
-      const clickable = event.target.closest(cfg.clickableSelector);
-      if (!clickable) return;
-      cursor.style.backgroundImage = `url("${cfg.heartCursor}")`;
-    };
-
     document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseover", onMouseOver);
-    document.addEventListener("mouseout", onMouseOut);
+    document.addEventListener("mouseleave", onMouseLeave);
     rafId = window.requestAnimationFrame(animateTrail);
 
     return {
       destroy() {
         window.cancelAnimationFrame(rafId);
         document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("mouseover", onMouseOver);
-        document.removeEventListener("mouseout", onMouseOut);
+        document.removeEventListener("mouseleave", onMouseLeave);
         cursor.remove();
         trail.forEach((star) => star.remove());
         document.body.classList.remove(cfg.bodyClassName);
