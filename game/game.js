@@ -216,6 +216,7 @@ const cfg = {
 
 const state = {
   x: 120,
+  prevX: 120,
   y: 0,
   prevY: 0,
   vx: 0,
@@ -680,10 +681,21 @@ function updatePipes() {
 }
 
 function updateCoins() {
+  const prevPlayerLeft = state.prevX;
+  const prevPlayerRight = state.prevX + cfg.playerWidth;
+  const prevPlayerBottom = cfg.groundY + state.prevY;
+  const prevPlayerTop = prevPlayerBottom + cfg.playerHeight;
+
   const playerLeft = state.x;
   const playerRight = state.x + cfg.playerWidth;
-  const previousTop = cfg.groundY + state.prevY + cfg.playerHeight;
-  const currentTop = cfg.groundY + state.y + cfg.playerHeight;
+  const playerBottom = cfg.groundY + state.y;
+  const playerTop = playerBottom + cfg.playerHeight;
+
+  const sweepLeft = Math.min(prevPlayerLeft, playerLeft);
+  const sweepRight = Math.max(prevPlayerRight, playerRight);
+  const sweepBottom = Math.min(prevPlayerBottom, playerBottom);
+  const sweepTop = Math.max(prevPlayerTop, playerTop);
+  const isJumping = state.y > 0 || state.prevY > 0;
 
   els.coins.forEach((coin) => {
     if (coin.dataset.collected === "1") return;
@@ -697,13 +709,11 @@ function updateCoins() {
     if (!coin.dataset.bottom) {
       coin.dataset.bottom = String(coinBottom);
     }
-    const crossedFromBelow =
-      state.vy > 0 &&
-      previousTop < coinBottom &&
-      currentTop >= coinBottom;
-    const overlapX = playerRight > coinLeft && playerLeft < coinRight;
+    const coinTop = coinBottom + cfg.coinSize;
+    const overlapX = sweepRight > coinLeft && sweepLeft < coinRight;
+    const overlapY = sweepTop > coinBottom && sweepBottom < coinTop;
 
-    if (crossedFromBelow && overlapX) {
+    if (isJumping && overlapX && overlapY) {
       coin.dataset.collected = "1";
       coin.classList.add("collected");
       state.coins += 1;
@@ -733,6 +743,7 @@ function readInput() {
 }
 
 function applyPhysics() {
+  const prevX = state.x;
   const prevY = state.y;
   state.vy -= cfg.gravity;
   state.x += state.vx;
@@ -746,6 +757,7 @@ function applyPhysics() {
 
   const maxX = cfg.worldWidth - cfg.playerWidth;
   state.x = Math.max(0, Math.min(maxX, state.x));
+  state.prevX = prevX;
   state.prevY = prevY;
 }
 
