@@ -206,6 +206,8 @@ const els = {
 const cfg = {
   worldWidth: 4200,
   playerWidth: 44,
+  playerHeight: 56,
+  coinSize: 28,
   groundY: 72,
   speed: 4.4,
   jumpPower: 13.5,
@@ -215,6 +217,7 @@ const cfg = {
 const state = {
   x: 120,
   y: 0,
+  prevY: 0,
   vx: 0,
   vy: 0,
   onGround: true,
@@ -677,14 +680,30 @@ function updatePipes() {
 }
 
 function updateCoins() {
+  const playerLeft = state.x;
+  const playerRight = state.x + cfg.playerWidth;
+  const previousTop = cfg.groundY + state.prevY + cfg.playerHeight;
+  const currentTop = cfg.groundY + state.y + cfg.playerHeight;
+
   els.coins.forEach((coin) => {
     if (coin.dataset.collected === "1") return;
 
-    const cx = parseFloat(coin.style.left) + 14;
-    const nearX = Math.abs((state.x + cfg.playerWidth / 2) - cx) < 26;
-    const nearY = state.y < 62;
+    const coinLeft = parseFloat(coin.style.left);
+    const coinRight = coinLeft + cfg.coinSize;
+    const coinBottom =
+      Number.parseFloat(coin.dataset.bottom || "") ||
+      Number.parseFloat(window.getComputedStyle(coin).bottom) ||
+      0;
+    if (!coin.dataset.bottom) {
+      coin.dataset.bottom = String(coinBottom);
+    }
+    const crossedFromBelow =
+      state.vy > 0 &&
+      previousTop < coinBottom &&
+      currentTop >= coinBottom;
+    const overlapX = playerRight > coinLeft && playerLeft < coinRight;
 
-    if (nearX && nearY) {
+    if (crossedFromBelow && overlapX) {
       coin.dataset.collected = "1";
       coin.classList.add("collected");
       state.coins += 1;
@@ -714,6 +733,7 @@ function readInput() {
 }
 
 function applyPhysics() {
+  const prevY = state.y;
   state.vy -= cfg.gravity;
   state.x += state.vx;
   state.y += state.vy;
@@ -726,6 +746,7 @@ function applyPhysics() {
 
   const maxX = cfg.worldWidth - cfg.playerWidth;
   state.x = Math.max(0, Math.min(maxX, state.x));
+  state.prevY = prevY;
 }
 
 function lerp(a, b, t) {
