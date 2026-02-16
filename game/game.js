@@ -525,14 +525,37 @@ function renderLinks(links) {
     .join("")}</div>`;
 }
 
+function formatExperienceSinceNovember2018() {
+  const startDate = new Date(2018, 10, 1);
+  const now = new Date();
+  let totalMonths =
+    (now.getFullYear() - startDate.getFullYear()) * 12 +
+    (now.getMonth() - startDate.getMonth());
+
+  if (now.getDate() < startDate.getDate()) {
+    totalMonths -= 1;
+  }
+  totalMonths = Math.max(0, totalMonths);
+
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+  const yearLabel = `${years} year${years === 1 ? "" : "s"}`;
+  if (months === 0) return yearLabel;
+
+  return `${yearLabel} ${months} month${months === 1 ? "" : "s"}`;
+}
+
 function renderAboutPanel() {
   const about = profile.About;
+  const experienceDuration = formatExperienceSinceNovember2018();
+
   return `
     <section class="hero-card">
       <h3 class="hero-name">${escapeHtml(about.name)}</h3>
       <p class="hero-title">${escapeHtml(about.title)}</p>
       <div class="meta-row">
         <span class="meta-pill">${escapeHtml(about.location)}</span>
+        <span class="meta-pill">${escapeHtml(`Total Experience: ${experienceDuration}`)}</span>
       </div>
     </section>
     ${renderParagraphs(about.summary)}
