@@ -214,6 +214,12 @@ const cfg = {
   gravity: 0.72
 };
 
+const PHYSICS_STEP_MS = 1000 / 60;
+const MAX_FRAME_DELTA_MS = 100;
+const MAX_STEPS_PER_FRAME = 6;
+let lastFrameTime = 0;
+let accumulatorMs = 0;
+
 const state = {
   x: 120,
   prevX: 120,
@@ -804,12 +810,34 @@ function render() {
   }
 }
 
-function gameLoop() {
+function stepSimulation() {
   readInput();
   applyPhysics();
   updateCoins();
   updatePipes();
   updateDayCycle();
+}
+
+function gameLoop(now = performance.now()) {
+  if (!lastFrameTime) {
+    lastFrameTime = now;
+  }
+
+  const frameDelta = Math.min(now - lastFrameTime, MAX_FRAME_DELTA_MS);
+  lastFrameTime = now;
+  accumulatorMs += frameDelta;
+
+  let steps = 0;
+  while (accumulatorMs >= PHYSICS_STEP_MS && steps < MAX_STEPS_PER_FRAME) {
+    stepSimulation();
+    accumulatorMs -= PHYSICS_STEP_MS;
+    steps += 1;
+  }
+
+  if (steps === MAX_STEPS_PER_FRAME) {
+    accumulatorMs = 0;
+  }
+
   render();
   requestAnimationFrame(gameLoop);
 }
@@ -852,4 +880,7 @@ els.pipes.forEach((pipe) => {
   });
 });
 
-requestAnimationFrame(gameLoop);
+requestAnimationFrame((now) => {
+  lastFrameTime = now;
+  gameLoop(now);
+});
