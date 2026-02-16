@@ -307,24 +307,31 @@ body.hide-sakura #sakura{opacity:0}
 }
 
 .pipe-house::before{
-  width:64px;
-  height:50px;
-  bottom:36px;
+  width:68px;
+  height:52px;
+  bottom:34px;
   transform:translateX(-50%);
-  border:3px solid #8a4b3e;
-  border-radius:9px;
+  border:3px solid #7e4b3b;
+  border-radius:10px;
   background:
-    linear-gradient(90deg,#fff8cb 0 50%,#fff0b3 50% 100%);
-  box-shadow:inset 0 -6px 0 #ffd78e;
+    radial-gradient(circle,#6f4c3e 0 2px,transparent 2.5px) calc(50% + 5px) calc(100% - 14px)/6px 6px no-repeat,
+    linear-gradient(#a56b4f,#8d553f) center calc(100% - 3px)/16px 24px no-repeat,
+    linear-gradient(#dceefe,#dceefe) 12px 12px/16px 14px no-repeat,
+    linear-gradient(#dceefe,#dceefe) calc(100% - 28px) 12px/16px 14px no-repeat,
+    linear-gradient(180deg,#fff6d8,#ffe7bd);
+  box-shadow:inset 0 -7px 0 #f6cc84;
 }
 .pipe-house::after{
-  width:72px;
-  height:40px;
+  width:84px;
+  height:44px;
   bottom:76px;
-  transform:translateX(-50%) rotate(45deg);
+  transform:translateX(-50%);
   border:3px solid #8d3e5f;
-  border-radius:8px;
-  background:linear-gradient(135deg,#ff8dbf,#ff66a9);
+  border-radius:4px;
+  clip-path:polygon(50% 0,100% 100%,0 100%);
+  background:
+    linear-gradient(#cf8b6f,#cf8b6f) 17px 8px/10px 12px no-repeat,
+    linear-gradient(180deg,#ff96c6,#ff5fa5);
 }
 
 .pipe-tree::before{
