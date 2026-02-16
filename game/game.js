@@ -140,15 +140,6 @@ const profile = {
       `,
       techStack: ["Flask", "PostgreSQL", "Flask-WTF"],
       link: null
-    },
-    {
-      name: "Supersafe",
-      description: `
-        Pentest and domain management system with dynamic forms,
-        caching, and secure request lifecycle handling.
-      `,
-      techStack: ["Flask", "SQLAlchemy", "JavaScript"],
-      link: null
     }
   ],
 
@@ -156,7 +147,7 @@ const profile = {
     {
       title: "UStar Recognition Award",
       date: "May, 2022",
-      detail: "UST CodeGround"
+      detail: "UST Awards"
     },
     {
       title: "Competition 3.0 Finalist",
